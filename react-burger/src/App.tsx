@@ -11,10 +11,9 @@ function App() {
         <AppHeader/>
       </header >
       <main style={{ display: 'flex', flexDirection: "row", alignItems: "flex-start", flexWrap: "wrap" }}>
-      < BurgerIngredients />
-      <BurgerConstructor />
+        <BurgerIngredients />
+        <BurgerConstructor />
       </main>
-      
     </div>
   )
 }

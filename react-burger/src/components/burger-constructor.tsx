@@ -15,6 +15,7 @@ const BurgerConstructor = (props: any) => {
         price={1255}
         thumbnail={img}
       />
+      
       <ConstructorElement
         type="bottom"
         isLocked={true}
