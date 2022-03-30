@@ -7,30 +7,25 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 function App() {
   const url = 'https://norma.nomoreparties.space/api/ingredients';
-  const [state, setState] = React.useState([{}]);
-  useEffect(()=>{
-    const getData = async ()=>{fetch(url)
-      .then((res)=> res.json())
-      .then((data)=> setState([...state, data.data ]))
-      .catch(err=> console.log("error"))
-      
-      console.log("state", state)
+  const [state, setState] = React.useState([]);
+  useEffect(() => {
+    const getData = async () => {
+      fetch(url)
+      .then((res) => {return res.ok ? res.json() : res.json().then((err)=>Promise.reject(err))})
+      .then((data) => {return data.data})
+      .then(setState)
+      .catch(() => alert("Во время загрузки данных произошла ошибка:("))
     }
     getData();
   }, [])
-  
-  
+
+
   return (
     <div className={appStyles.App}>
-      
-      <header className={appStyles.header}>
-        <div className={appStyles.page_content}>
-        <AppHeader />
-        </div>
-      </header >
+      <AppHeader />
       <main className={appStyles.page_content}>
-        <BurgerIngredients data={state[1]}  />
-        <BurgerConstructor data={state[1]} />
+        <BurgerIngredients data={state} />
+        <BurgerConstructor data={state} />
       </main>
     </div>
   )

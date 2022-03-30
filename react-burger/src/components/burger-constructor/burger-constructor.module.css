@@ -12,7 +12,7 @@
 }
 
 .main{
-    overflow: scroll; 
+    overflow-y: scroll; 
     height: 440px;
 }
 
@@ -27,4 +27,11 @@
 .cost{
     margin: 40px 0 auto auto; 
     display: inline-flex; 
+}
+
+.price{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 40px;
 }
