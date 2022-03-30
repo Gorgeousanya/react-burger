@@ -19,8 +19,13 @@ const Card = (props: any) => {
           <Counter count={1} size="default" />
         </div>
         <img src={props.img} className={ingredientStyles.img} />
-        <p className="text text_type_digits-default" style={{ display: 'flex', flexDirection: 'row', alignItems: "center" }} >{props.price} <CurrencyIcon type="primary" /></p>
-        <p className="text text_type_main-default" style={{ textAlign: "center" }}>{props.name}</p>
+        <div className={ingredientStyles.map}>
+          <p className="text text_type_digits-default"  >
+            {props.price}
+            <CurrencyIcon type="primary" />
+          </p>
+        </div>
+        <p className="text text_type_main-default" >{props.name}</p>
       </div>
     </React.Fragment>
   )
@@ -30,6 +35,7 @@ const BurgerIngredients = (props: any) => {
   const [current, setCurrent] = React.useState('one');
   const [open, setOpen] = React.useState(false);
   const [ingredient, setIngredient] = React.useState('');
+  let prop = props.data?.filter((item: any) => item.name == ingredient) ;
   return (
     <div className={ingredientStyles.ingredient}>
 
@@ -37,12 +43,14 @@ const BurgerIngredients = (props: any) => {
         message={'Детали заказа'}
         isOpen={open}
         onClose={() => setOpen(false)}
-      > <IngredientDetails ingredient={props.data?.filter((item: any) => item.name == ingredient)[0]} />
+      > <IngredientDetails
+          ingredient={prop}
+        />
       </Modal>
       <div className={ingredientStyles.burger}>
-      <p className="text text_type_main-large">
-        Соберите бургер
-      </p>
+        <p className="text text_type_main-large">
+          Соберите бургер
+        </p>
       </div >
       <div className={ingredientStyles.tab}>
         <Tab value="one" active={current === 'one'} onClick={setCurrent}>

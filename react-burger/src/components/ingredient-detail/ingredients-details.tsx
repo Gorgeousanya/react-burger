@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 export default function IngredientDetails(props: any) {
   return (
     <div className={styles.component} >
-      <img src={props.ingredient.image_large} alt="image_large" />
+      <img src={props.ingredient[0].image_large} alt="image_large" />
       <p className="text text_type_main-medium">
-        {props.ingredient.name}
+        {props.ingredient[0].name}
       </p>
       <div className={styles.ingredient}>
         <div>
@@ -16,7 +16,7 @@ export default function IngredientDetails(props: any) {
             Калории, ккал
           </p>
           <p className="text text_type_main-default text_color_inactive">
-            {props.ingredient.calories}
+            {props.ingredient[0].calories}
           </p>
         </div>
         <div>
@@ -24,7 +24,7 @@ export default function IngredientDetails(props: any) {
             Белки, г
           </p>
           <p className="text text_type_main-default text_color_inactive">
-            {props.ingredient.proteins}
+            {props.ingredient[0].proteins}
           </p>
         </div>
         <div>
@@ -32,7 +32,7 @@ export default function IngredientDetails(props: any) {
             Жиры, г
           </p>
           <p className="text text_type_main-default text_color_inactive">
-            {props.ingredient.fat}
+            {props.ingredient[0].fat}
           </p>
         </div>
         <div>
@@ -40,7 +40,7 @@ export default function IngredientDetails(props: any) {
             Углеводы, г
           </p>
           <p className="text text_type_main-default text_color_inactive">
-            {props.ingredient.carbohydrates}
+            {props.ingredient[0].carbohydrates}
           </p>
         </div>
       </div>
@@ -49,5 +49,5 @@ export default function IngredientDetails(props: any) {
 }
 
 IngredientDetails.propTypes = {
-  ingredient: PropTypes.objectOf(ingredientPropTypes.isRequired),
+  ingredient: PropTypes.arrayOf(ingredientPropTypes.isRequired),
 }

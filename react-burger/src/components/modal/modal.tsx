@@ -3,6 +3,8 @@ import { Tab, Button, Logo, BurgerIcon, CloseIcon, ProfileIcon, ConstructorEleme
 import ReactDOM from 'react-dom';
 import ModalOverlay from './modal-overlay';
 import styles from './modal.module.css';
+import PropTypes from 'prop-types';
+
 const modalRoot = document.getElementById('modals') || document.body;
 
 export default function Modal(props: any) {
@@ -17,7 +19,8 @@ export default function Modal(props: any) {
     }, [props.onClose])
     if (!props.isOpen) return null;
     return ReactDOM.createPortal(
-        <><ModalOverlay onClick={props.onClose} />
+        <>
+            <ModalOverlay onClick={props.onClose} />
             <div className={styles.modal} >
                 <div className={styles.header}>
                     <p className="text text_type_main-large">
@@ -31,7 +34,13 @@ export default function Modal(props: any) {
                 </div>
                 {props.children}
             </div>
-            
         </>
         , modalRoot);
+}
+
+Modal.propTypes = {
+    message: PropTypes.string.isRequired,
+    children: PropTypes.node,
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
 }
