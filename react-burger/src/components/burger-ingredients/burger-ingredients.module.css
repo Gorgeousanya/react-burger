@@ -1,0 +1,45 @@
+.ingredient{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+    max-height: 912px;
+}
+
+.tab{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow-y: scroll; 
+    height: 700px;
+}
+
+.map{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.img{
+    width: 240px;
+}
+
+.card{
+    width: 272px;
+    margin: 16px; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+.counter{
+    position: relative;
+    left: 140px;
+}

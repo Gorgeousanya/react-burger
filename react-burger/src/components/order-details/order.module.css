@@ -1,0 +1,9 @@
+.component{
+    overflow: hidden;
+    padding-bottom: 120px;
+    text-align: center;
+}
+
+.img{
+    padding: 40px;
+}

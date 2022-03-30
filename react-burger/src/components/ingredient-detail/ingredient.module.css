@@ -1,0 +1,11 @@
+.ingredient{
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 60px;
+    padding-top: 32px;
+}
+
+.component{
+    overflow: hidden;
+    text-align: center;
+}

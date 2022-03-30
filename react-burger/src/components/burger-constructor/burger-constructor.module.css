@@ -1,0 +1,30 @@
+.content{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+    margin-left: 40px;
+    max-height: 540px;
+}
+
+.locked{
+    padding-left: 28px;
+    width: 550px;
+}
+
+.main{
+    overflow: scroll; 
+    height: 440px;
+}
+
+.element{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+    width: 550px;
+}
+
+.cost{
+    margin: 40px 0 auto auto; 
+    display: inline-flex; 
+}

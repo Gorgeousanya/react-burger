@@ -1,0 +1,22 @@
+.burger_constructor{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logo{
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.profile{
+    position: relative;
+    left: 80%;
+}
+
+.icon{
+    padding-left: 8px;
+}
