@@ -4,9 +4,10 @@ import { ingredientPropTypes } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
 
 export default function OrderDetails(props: any) {
+  console.log(props.order)
   return (
     <div className={styles.component} >
-      <p className="text text_type_digits-large">{props.order}</p>
+      <p className="text text_type_digits-large">{props.order.order.number}</p>
       <p className="text text_type_main-medium">
         идентификатор заказа
       </p>
@@ -21,7 +22,7 @@ export default function OrderDetails(props: any) {
 }
 
 OrderDetails.propTypes = {
-  order: PropTypes.string.isRequired,
+  order: PropTypes.object,
 }
 
 
