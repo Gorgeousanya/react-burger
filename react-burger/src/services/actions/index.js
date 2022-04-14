@@ -47,9 +47,7 @@ export const getOrderID = (data) => {
                         'Content-Type': 'application/json'
                     }
                 })
-                .then(response => {
-                    return checkResponse(response);
-                })
+                .then(checkResponse)
                 .then(obj => {
                     console.log(obj)
                     dispatch({
@@ -74,9 +72,7 @@ export const getIngredientsData = () => {
             });
 
             fetch(baseUrl + "ingredients")
-                .then(response => {
-                    return checkResponse(response);
-                })
+                .then( checkResponse)
                 .then(obj => {
                     dispatch({
                         type: GET_INGREDIENTS_SUCCESS,
