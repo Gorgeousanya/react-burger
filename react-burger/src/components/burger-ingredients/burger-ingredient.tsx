@@ -1,5 +1,4 @@
 import React from 'react';
-//import data from '../../utils/data';
 import ingredientStyles from './burger-ingredients.module.css';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
@@ -17,18 +16,18 @@ const main = "Начинки";
 const Card = (props: any) => {
   const [, dragRef] = useDrag({
     type: "ingredients",
-    item:  props.item 
+    item: props.item
   });
   const constructor = useSelector((state: RootStateOrAny) => state.constructor);
-  const count = constructor?.filter((item:any) => item._id === props.item._id).length;
+  const count = constructor?.filter((item: any) => item._id === props.item._id).length;
   return (
     <React.Fragment>
       <div className={ingredientStyles.card} onClick={props.onClick} ref={dragRef}>
         {
-          count!=0 && count &&
+          count != 0 && count &&
           <div className={ingredientStyles.counter}>
             <Counter count={count} size="default" />
-          </div> 
+          </div>
         }
         <img src={props.item.image_large} className={ingredientStyles.img} />
         <div className={ingredientStyles.map}>
@@ -58,8 +57,8 @@ const BurgerIngredients = () => {
   }
 
   function scrollIngredientsList() {
+    const arr = ["one", "two", "three"];
     let pos = document.getElementById("ingredients-list")?.scrollTop || 0;
-    let arr = ["one", "two", "three"];
     let res = "";
     let resdy = 1000000;
     let dy = 0;

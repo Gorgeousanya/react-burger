@@ -3,7 +3,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     width: 50%;
-    max-height: 912px;
+    max-height: 1012px;
 }
 
 .tab{
@@ -19,7 +19,7 @@
     flex-wrap: wrap;
     overflow-y: scroll; 
     overflow-x: hidden;
-    height: 400px;
+    height: 60vh;
 }
 
 .map{

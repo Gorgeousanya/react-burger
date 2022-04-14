@@ -1,3 +1,6 @@
+import {
+    baseUrl
+} from "../../utils/api";
 export const SET_TAB = 'SET_TAB';
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
@@ -18,58 +21,73 @@ export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
 export const CHANGE_SORT = 'CHANGE_SORT';
 
-export  const getOrderID = (data) => {
-    
-    return (dispatch) => {
-        try
-        {
-            dispatch({type: GET_ORDER_REQUEST});
+function checkResponse(res) {
+    if (res.ok) {
+        return res.json();
+    } else {
+        return Promise.reject(`Ошибка ${res.status}`);
+    }
+}
 
-            fetch("https://norma.nomoreparties.space/api/orders", {method: 'POST', mode: 'cors', body: JSON.stringify({"ingredients":data}), headers: {'Content-Type': 'application/json'}})
-                .then(response => {
-                   
-                    if(!response.ok )
-                    {
-                        console.log("ok")
-                        dispatch({type: GET_ORDER_ERROR, error: response.status});
-                        return;
+export const getOrderID = (data) => {
+
+    return (dispatch) => {
+        try {
+            dispatch({
+                type: GET_ORDER_REQUEST
+            });
+
+            fetch(baseUrl + "orders", {
+                    method: 'POST',
+                    mode: 'cors',
+                    body: JSON.stringify({
+                        "ingredients": data
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
-                    return response.json();
                 })
-                .then(obj=>{
+                .then(response => {
+                    return checkResponse(response);
+                })
+                .then(obj => {
                     console.log(obj)
-                    dispatch({type: GET_ORDER_SUCCESS, data: obj});
+                    dispatch({
+                        type: GET_ORDER_SUCCESS,
+                        data: obj
+                    });
                 });
-        }
-        catch (error)
-        {
-            dispatch({type: GET_ORDER_ERROR, error: error});
+        } catch (error) {
+            dispatch({
+                type: GET_ORDER_ERROR,
+                error: error
+            });
         }
     }
 };
 
 export const getIngredientsData = () => {
     return (dispatch) => {
-        try
-        {
-            dispatch({type: GET_INGREDIENTS_REQUEST});
-            
-            fetch("https://norma.nomoreparties.space/api/ingredients")
+        try {
+            dispatch({
+                type: GET_INGREDIENTS_REQUEST
+            });
+
+            fetch(baseUrl + "ingredients")
                 .then(response => {
-                    if(!response.ok )
-                    {
-                        dispatch({type: GET_INGREDIENTS_ERROR, error: response.status});
-                        return;
-                    }
-                    return response.json();
+                    return checkResponse(response);
                 })
                 .then(obj => {
-                    dispatch({type: GET_INGREDIENTS_SUCCESS, data: obj.data});
+                    dispatch({
+                        type: GET_INGREDIENTS_SUCCESS,
+                        data: obj.data
+                    });
                 });
-        }
-        catch (error)
-        {
-            dispatch({type: GET_INGREDIENTS_ERROR, error: error});
+        } catch (error) {
+            dispatch({
+                type: GET_INGREDIENTS_ERROR,
+                error: error
+            });
         }
     }
 };

@@ -58,20 +58,15 @@ export const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 constructor:
-                    state.constructor
-                    ? action.item.type === "bun" 
-                        ? [...state.constructor, action.item, action.item]
-                        : [...state.constructor, action.item]
-                    : action.item.type === "bun"
-                        ? [action.item, action.item]
-                        : [action.item]
+                    state.constructor 
+                    ? action.item.type === "bun" ? [...state.constructor, action.item, action.item] : [...state.constructor, action.item]
+                    : action.item.type === "bun" ? [action.item, action.item]: [action.item]
             };
         case DELETE_INGREDIENT:
             return {
                 ...state,
                 constructor: 
-                    [...state.constructor].filter((item) => item._id!==action.id)
-                
+                    [...state.constructor].filter((item) => item.uuid!==action.id)
             }
         case OPEN_MODAL:
             return {
@@ -113,15 +108,12 @@ export const rootReducer = (state = initialState, action) => {
             const items = state.constructor.filter(item => item.type!=="bun");
             const bun = state.constructor.filter(ingredient => ingredient.type === 'bun');
             const other=[...items];
-            console.log(other)
             const drag = other.splice(action.drag, 1)[0];
-            console.log(drag, other);
             other.splice(action.hover, 0, drag)
-            console.log(other)
             return {
                 ...state,
                 constructor: [...bun, ...other]
-            }                           
+            }                                   
         default:
             return state;
     }

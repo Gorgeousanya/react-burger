@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { v4 as uuidv4 } from "uuid"
 import constructorStyles from './burger-constructor.module.css';
 import { Button, DragIcon, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
@@ -10,42 +11,28 @@ import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
 import { ADD_INGREDIENT, CHANGE_SORT, DELETE_INGREDIENT, OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER, CLEAR_ORDER } from '../../services/actions';
 import { getOrderID } from '../../services/actions';
 
+
 const Constructor = ({ item, index }: any) => {
   const ref = React.useRef(null);
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({
-    type: "ingredients",
+    type: "ingredient",
     item: { index }
   });
 
   const [, dropTarget] = useDrop({
-    accept: "ingredients",
-    drop(item) {
-      const drag = item.index;
-      const hover = index;  
-      if(drag===hover) return;          
-      dispatch({type:CHANGE_SORT, drag:drag, hover:hover});
-  },
+    accept: "ingredient",
     hover: (item: any) => {
       if (!ref.current) return;
-      const drag = item.index;
-      const hover = index;
-      console.log(drag, hover)
-      if (drag === hover) return;
-      dispatch({type:CHANGE_SORT, drag:drag, hover:hover});
-      item.index = hover;
+      const dragIndex = item.index;
+      const hoverIndex = index;
+      if (dragIndex === hoverIndex) return;
+      dispatch({ type: CHANGE_SORT, drag: dragIndex, hover: hoverIndex })
+      item.index = hoverIndex;
     }
   });
 
   dragRef(dropTarget(ref));
-
-  const onMove = React.useCallback((drag: number, hover: number) => {
-      dispatch({
-        type: CHANGE_SORT,
-        drag: drag,
-        hover: hover
-      });
-    }, [dispatch]);
 
   return (
     <div className={constructorStyles.element} ref={ref} >
@@ -54,7 +41,7 @@ const Constructor = ({ item, index }: any) => {
         text={item?.name}
         price={item?.price}
         thumbnail={item?.image}
-        handleClose={() => { dispatch({ type: DELETE_INGREDIENT, id: item?._id }); }}
+        handleClose={() => { dispatch({ type: DELETE_INGREDIENT, id: item?.uuid }); }}
       />
     </div>
   )
@@ -62,19 +49,19 @@ const Constructor = ({ item, index }: any) => {
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const  constructor  = useSelector((state: RootStateOrAny) => state.constructor);
-  const bun = constructor?.find((ingredient:any) => ingredient.type === 'bun');
-  const other = constructor?.filter((ingredient:any) => ingredient.type !== 'bun');
+  const constructor = useSelector((state: RootStateOrAny) => state.constructor);
+  const bun = constructor?.find((ingredient: any) => ingredient?.type === 'bun');
+  const other = constructor?.filter((ingredient: any) => ingredient?.type && ingredient?.type !== 'bun');
   const order = useSelector((state: RootStateOrAny) => state.order);
   const open = useSelector((state: RootStateOrAny) => state.modalOrder);
- 
+
   const total = React.useMemo(
     () =>
-        constructor
-        ? constructor.reduce((sum:any, current:any) => sum + current.price, 0)
+      constructor
+        ? constructor.filter((ingredient: any) => ingredient?.price).reduce((sum: any, current: any) => sum + current.price, 0)
         : 0,
     [constructor]
-);
+  );
 
   const [{ isDrop }, dropTarget] = useDrop({
     accept: "ingredients",
@@ -83,12 +70,12 @@ const BurgerConstructor = () => {
         console.log("bun")
         dispatch({
           type: DELETE_INGREDIENT,
-          id: bun._id
+          id: bun.uuid
         });
       }
       dispatch({
         type: ADD_INGREDIENT,
-        item: ingredient
+        item: { ...ingredient, uuid: uuidv4() }
       });
     },
     collect: (monitor) => ({
@@ -96,31 +83,30 @@ const BurgerConstructor = () => {
     }),
   });
 
-  
-
   const clickOrder = () => {
-    const data = constructor.map(((item:any) => item._id));
+    const data = constructor.map(((item: any) => item._id));
     dispatch(getOrderID(data));
-    setTimeout(() => { dispatch({
-      type: OPEN_MODAL_ORDER
-    })}, 1000)
-}
-
+    setTimeout(() => {
+      dispatch({
+        type: OPEN_MODAL_ORDER
+      })
+    }, 1000)
+  }
 
   const classNameContainer = `${constructorStyles.container} ${isDrop && constructorStyles.drop}`
 
   return (
     <React.Fragment>
       <Modal
-        message={order?.name||''}
+        message={order?.name || ''}
         isOpen={open}
-        onClose={() => { dispatch({ type: CLOSE_MODAL_ORDER }); dispatch({ type:CLEAR_ORDER }); }}
+        onClose={() => { dispatch({ type: CLOSE_MODAL_ORDER }); dispatch({ type: CLEAR_ORDER }); }}
       > <OrderDetails order={order} />
       </Modal>
       <div className={classNameContainer} ref={dropTarget}>
 
         {
-         bun 
+          bun
           && <ConstructorElement
             type="top"
             isLocked={true}
@@ -131,10 +117,10 @@ const BurgerConstructor = () => {
         }
 
         <div className={constructorStyles.main}>
-        {other &&
-            other?.map(( item: any, i : any) => 
-            (<Constructor key={item?._id + i} item={item} index={i} />))
-         }
+          {other &&
+            other?.map((item: any, i: any) =>
+              (<Constructor key={item?.uuid} item={item} index={i} />))
+          }
         </div>
         {
           bun

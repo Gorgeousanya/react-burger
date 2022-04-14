@@ -43,7 +43,7 @@
     flex-direction: column;
     margin-top: 5%;
     margin-left: 40px;
-    max-height: 500px;
+    max-height: 70vh;
     width: 600px;
     flex-grow: 1;
 }
