@@ -24,12 +24,12 @@ const Card = (props: any) => {
     <React.Fragment>
       <div className={ingredientStyles.card} onClick={props.onClick} ref={dragRef}>
         {
-          count != 0 && count &&
+          count !== 0 && count &&
           <div className={ingredientStyles.counter}>
             <Counter count={count} size="default" />
           </div>
         }
-        <img src={props.item.image_large} className={ingredientStyles.img} />
+        <img src={props.item.image_large} className={ingredientStyles.img} alt={props.item.name}/>
         <div className={ingredientStyles.map}>
           <p className="text text_type_digits-default"  >
             {props.item.price}
@@ -68,7 +68,7 @@ const BurgerIngredients = () => {
       dy = Math.abs(offsetTopItem - offsetTop - pos);
       if (dy < resdy) { res = item; resdy = dy }
     });
-    if (res != current)
+    if (res !== current)
       dispatch({ type: SET_TAB, tab: res });
   }
 

@@ -72,7 +72,7 @@ export const getIngredientsData = () => {
             });
 
             fetch(baseUrl + "ingredients")
-                .then( checkResponse)
+                .then(checkResponse)
                 .then(obj => {
                     dispatch({
                         type: GET_INGREDIENTS_SUCCESS,
@@ -87,3 +87,25 @@ export const getIngredientsData = () => {
         }
     }
 };
+
+export const addIngredient=(item)=> {
+    return {
+      type: ADD_INGREDIENT,
+      item
+    }
+  }
+
+export const deleteIngredient = (id) => {
+    return {
+        type: DELETE_INGREDIENT,
+        id
+    }
+}
+
+export const changeSortIngredient = (drag, hover) => {
+    return {
+        type: CHANGE_SORT,
+        drag,
+        hover
+    }
+}

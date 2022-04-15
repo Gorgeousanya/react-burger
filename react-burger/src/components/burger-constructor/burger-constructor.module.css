@@ -52,3 +52,7 @@
     outline: 3px solid rgb(136, 118, 236);
     border-radius: 30px;
 }
+
+p{
+    text-align: center;
+}

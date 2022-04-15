@@ -1,7 +1,5 @@
-import React from 'react';
 import styles from './ingredient.module.css';
 import { ingredientPropTypes } from '../../utils/prop-types';
-import PropTypes from 'prop-types';
 
 export default function IngredientDetails(props: any) {
   console.log(props.ingredient);

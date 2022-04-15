@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tab, Button, Logo, BurgerIcon, CloseIcon, ProfileIcon, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, CloseIcon,} from '@ya.praktikum/react-developer-burger-ui-components';
 import ReactDOM from 'react-dom';
 import ModalOverlay from './modal-overlay';
 import styles from './modal.module.css';
@@ -10,7 +10,7 @@ const modalRoot = document.getElementById('modals') || document.body;
 export default function Modal(props: any) {
     React.useEffect(() => {
         const handleEscape = (e: any) => {
-            e.key == "Escape" && props.onClose();
+            e.key === "Escape" && props.onClose();
         }
         document.addEventListener("keydown", handleEscape);
         return () => {

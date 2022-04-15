@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { v4 as uuidv4 } from "uuid"
 import constructorStyles from './burger-constructor.module.css';
 import { Button, DragIcon, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,8 +8,8 @@ import { ingredientPropTypes } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from "react-dnd";
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
-import { ADD_INGREDIENT, CHANGE_SORT, DELETE_INGREDIENT, OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER, CLEAR_ORDER } from '../../services/actions';
-import { getOrderID } from '../../services/actions';
+import { OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER, CLEAR_ORDER } from '../../services/actions';
+import { getOrderID, deleteIngredient, addIngredient, changeSortIngredient } from '../../services/actions';
 
 
 const Constructor = ({ item, index }: any) => {
@@ -27,7 +27,7 @@ const Constructor = ({ item, index }: any) => {
       const dragIndex = item.index;
       const hoverIndex = index;
       if (dragIndex === hoverIndex) return;
-      dispatch({ type: CHANGE_SORT, drag: dragIndex, hover: hoverIndex })
+      dispatch(changeSortIngredient(dragIndex, hoverIndex))
       item.index = hoverIndex;
     }
   });
@@ -41,7 +41,7 @@ const Constructor = ({ item, index }: any) => {
         text={item?.name}
         price={item?.price}
         thumbnail={item?.image}
-        handleClose={() => { dispatch({ type: DELETE_INGREDIENT, id: item?.uuid }); }}
+        handleClose={() => { dispatch(deleteIngredient(item?.uuid)); }}
       />
     </div>
   )
@@ -67,16 +67,9 @@ const BurgerConstructor = () => {
     accept: "ingredients",
     drop: (ingredient: any) => {
       if (bun && ingredient.type === "bun") {
-        console.log("bun")
-        dispatch({
-          type: DELETE_INGREDIENT,
-          id: bun.uuid
-        });
+        dispatch(deleteIngredient(bun?.uuid));
       }
-      dispatch({
-        type: ADD_INGREDIENT,
-        item: { ...ingredient, uuid: uuidv4() }
-      });
+      dispatch(addIngredient({ ...ingredient, uuid: uuidv4() }))
     },
     collect: (monitor) => ({
       isDrop: monitor.isOver(),
@@ -107,13 +100,16 @@ const BurgerConstructor = () => {
 
         {
           bun
-          && <ConstructorElement
+          ? <ConstructorElement
             type="top"
             isLocked={true}
             text={`${bun.name} (верх)`}
             price={bun.price}
             thumbnail={bun.image}
-          />
+          /> 
+          : <p className="text text_type_main-medium" >
+            Перенесите сюда ингредиенты для бургера
+            </p>
         }
 
         <div className={constructorStyles.main}>
@@ -139,7 +135,7 @@ const BurgerConstructor = () => {
               <CurrencyIcon type="primary" />
             </p>
           </div>
-          <Button type="primary" size="large" onClick={() => { clickOrder() }} disabled={total == 0}>
+          <Button type="primary" size="large" onClick={() => { clickOrder() }} disabled={total === 0}>
             Оформить заказ
           </Button>
         </div>

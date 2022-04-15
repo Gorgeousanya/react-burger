@@ -1,6 +1,5 @@
 import done from '../../images/done.svg';
 import styles from './order.module.css';
-import { ingredientPropTypes } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
 
 export default function OrderDetails(props: any) {
