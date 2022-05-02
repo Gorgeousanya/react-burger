@@ -10,6 +10,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
 import { OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER, CLEAR_ORDER } from '../../services/actions';
 import { getOrderID, deleteIngredient, addIngredient, changeSortIngredient } from '../../services/actions';
+import { useHistory } from 'react-router-dom';
 
 
 const Constructor = ({ item, index }: any) => {
@@ -54,11 +55,12 @@ const BurgerConstructor = () => {
   const other = constructor?.filter((ingredient: any) => ingredient?.type && ingredient?.type !== 'bun');
   const order = useSelector((state: RootStateOrAny) => state.order);
   const open = useSelector((state: RootStateOrAny) => state.modalOrder);
-
+  const history = useHistory();
+  const loggedIn = useSelector((store: RootStateOrAny) => store.loggedIn);
   const total = React.useMemo(
     () =>
       constructor
-        ? constructor.filter((ingredient: any) => ingredient?.price).reduce((sum: any, current: any) => sum + current.price, 0)
+        ? constructor?.filter((ingredient: any) => ingredient?.price).reduce((sum: any, current: any) => sum + current.price, 0)
         : 0,
     [constructor]
   );
@@ -77,13 +79,17 @@ const BurgerConstructor = () => {
   });
 
   const clickOrder = () => {
-    const data = constructor.map(((item: any) => item._id));
-    dispatch(getOrderID(data));
-    setTimeout(() => {
-      dispatch({
-        type: OPEN_MODAL_ORDER
-      })
-    }, 1000)
+    if (loggedIn) {
+      const data = constructor.map(((item: any) => item._id));
+      dispatch(getOrderID(data));
+      setTimeout(() => {
+        dispatch({
+          type: OPEN_MODAL_ORDER
+        })
+      }, 1000)
+    } else {
+      history.push("/login");
+    }
   }
 
   const classNameContainer = `${constructorStyles.container} ${isDrop && constructorStyles.drop}`
@@ -97,21 +103,19 @@ const BurgerConstructor = () => {
       > <OrderDetails order={order} />
       </Modal>
       <div className={classNameContainer} ref={dropTarget}>
-
         {
           bun
-          ? <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          /> 
-          : <p className="text text_type_main-medium" >
-            Перенесите сюда ингредиенты для бургера
+            ? <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+            : <p className="text text_type_main-medium" >
+              Перенесите сюда ингредиенты для бургера
             </p>
         }
-
         <div className={constructorStyles.main}>
           {other &&
             other?.map((item: any, i: any) =>
