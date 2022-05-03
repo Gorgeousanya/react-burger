@@ -4,14 +4,14 @@ import { Route, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
-import { register } from '../../services/actions';
+import { register } from '../../services/actions/auth';
 
 export default function RegisterPage() {
     const history = useHistory();
     const inputRef = useRef(null)
     const [form, setValue] = useState({ email: '', password: '', name: '' });
     const dispatch = useDispatch();
-    const loggedIn = useSelector((state: RootStateOrAny) => state.loggedIn);
+    const loggedIn = useSelector((state: RootStateOrAny) => state.auth.loggedIn);
 
     const onChange = (e: any) => {
         setValue({ ...form, [e.target.name]: e.target.value });

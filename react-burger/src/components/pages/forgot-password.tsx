@@ -1,16 +1,15 @@
 import styles from './pages.module.css';
 import AppHeader from '../app-header/app-header';
-import { Link, useHistory, Route, Redirect } from 'react-router-dom';
-import { useEffect, useState, useCallback, useRef } from 'react';
-import { EmailInput, Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useHistory, Redirect } from 'react-router-dom';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { forgotPassword } from '../../services/actions';
+import { forgotPassword } from '../../services/actions/auth';
 
 export default function ForgotPasswordPage() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const loggedIn = useSelector((store: RootStateOrAny) => store.loggedIn);
+  const loggedIn = useSelector((store: RootStateOrAny) => store.auth.loggedIn);
   const [form, setForm] = React.useState({ email: "" });
 
   const onChange = (e: any) => {

@@ -8,8 +8,8 @@ import { ingredientPropTypes } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from "react-dnd";
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
-import { OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER, CLEAR_ORDER } from '../../services/actions';
-import { getOrderID, deleteIngredient, addIngredient, changeSortIngredient } from '../../services/actions';
+import { OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER, CLEAR_ORDER } from '../../services/actions/burger';
+import { getOrderID, deleteIngredient, addIngredient, changeSortIngredient } from '../../services/actions/burger';
 import { useHistory } from 'react-router-dom';
 
 
@@ -50,13 +50,13 @@ const Constructor = ({ item, index }: any) => {
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const constructor = useSelector((state: RootStateOrAny) => state.constructor);
-  const bun = constructor?.find((ingredient: any) => ingredient?.type === 'bun');
-  const other = constructor?.filter((ingredient: any) => ingredient?.type && ingredient?.type !== 'bun');
-  const order = useSelector((state: RootStateOrAny) => state.order);
-  const open = useSelector((state: RootStateOrAny) => state.modalOrder);
+  const constructor = useSelector((state: RootStateOrAny) => state.burger.constructor ?? []);
+  const bun = constructor.find((ingredient: any) => ingredient?.type === 'bun');
+  const other = constructor.filter((ingredient: any) => ingredient?.type && ingredient?.type !== 'bun');
+  const order = useSelector((state: RootStateOrAny) => state.burger.order);
+  const open = useSelector((state: RootStateOrAny) => state.burger.modalOrder);
   const history = useHistory();
-  const loggedIn = useSelector((store: RootStateOrAny) => store.loggedIn);
+  const loggedIn = useSelector((store: RootStateOrAny) => store.auth.loggedIn);
   const total = React.useMemo(
     () =>
       constructor

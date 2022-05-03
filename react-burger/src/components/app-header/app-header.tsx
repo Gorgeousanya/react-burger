@@ -1,6 +1,6 @@
 import headerStyles from './app-header.module.css';
 import { Button, Logo, BurgerIcon, ListIcon, ProfileIcon, } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const AppHeader = () => {
   const history = useHistory();

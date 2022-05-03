@@ -6,7 +6,7 @@ import IngredientDetails from '../ingredient-detail/ingredients-details';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { SET_TAB, OPEN_MODAL, CLOSE_MODAL } from '../../services/actions';
+import { SET_TAB, OPEN_MODAL, CLOSE_MODAL } from '../../services/actions/burger';
 import { useDrag } from "react-dnd";
 
 const bun = "Булки";
@@ -18,7 +18,7 @@ const Card = (props: any) => {
     type: "ingredients",
     item: props.item
   });
-  const constructor = useSelector((state: RootStateOrAny) => state.constructor);
+  const constructor = useSelector((state: RootStateOrAny) => state.burger.constructor);
   const count = constructor?.filter((item: any) => item._id === props.item._id).length;
   return (
     <React.Fragment>
@@ -44,9 +44,9 @@ const Card = (props: any) => {
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
-  const current = useSelector((state: RootStateOrAny) => state.tab);
-  const modalItem = useSelector((state: RootStateOrAny) => state.modal);
-  const items = useSelector((state: RootStateOrAny) => state.ingredients);
+  const current = useSelector((state: RootStateOrAny) => state.burger.tab);
+  const modalItem = useSelector((state: RootStateOrAny) => state.burger.modal);
+  const items = useSelector((state: RootStateOrAny) => state.burger.ingredients);
 
   function clickTab(e: any) {
     dispatch({ type: SET_TAB, tab: e });

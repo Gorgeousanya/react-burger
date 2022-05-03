@@ -4,7 +4,7 @@ import { Route, Redirect, useHistory, useLocation, RouteComponentProps, } from '
 import { useState } from 'react';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { resetPassword } from '../../services/actions';
+import { resetPassword } from '../../services/actions/auth';
 
 export default function ResetPasswordPage() {
   const auth = useSelector(state => state.auth);

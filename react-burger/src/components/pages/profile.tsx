@@ -1,17 +1,17 @@
 import styles from './pages.module.css';
 import AppHeader from '../app-header/app-header';
-import { Route, Redirect } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { Redirect } from 'react-router-dom';
+import { useState, useRef } from 'react';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
-import { updateUser, logout } from '../../services/actions';
+import { updateUser, logout } from '../../services/actions/auth';
 
 export default function ProfilePage() {
   const inputRef = useRef(null)
   const dispatch = useDispatch();
-  const user = useSelector((state: RootStateOrAny) => state.user);
+  const user = useSelector((state: RootStateOrAny) => state.auth.user);
   console.log(user);
-  const loggedIn = useSelector((state: RootStateOrAny) => state.loggedIn);
+  const loggedIn = useSelector((state: RootStateOrAny) => state.auth.loggedIn);
   const [form, setForm] = useState({ ...user, password: "" }); 
 
   const onChange = (e: any) => {

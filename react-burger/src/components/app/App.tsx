@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getIngredientsData } from '../../services/actions';
-import { BrowserRouter as Router, Switch, Route, Redirect, useHistory, useLocation } from 'react-router-dom';
+import { getIngredientsData } from '../../services/actions/burger';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { HomePage, LoginPage, ProfilePage, RegisterPage, ForgotPasswordPage, ResetPasswordPage } from '../pages';
 import  ProtectedRoute from '../protected-routes'
 
