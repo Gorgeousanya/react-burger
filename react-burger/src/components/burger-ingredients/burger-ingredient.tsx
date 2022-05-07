@@ -1,13 +1,12 @@
 import React from 'react';
 import ingredientStyles from './burger-ingredients.module.css';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-detail/ingredients-details';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { SET_TAB, OPEN_MODAL, CLOSE_MODAL } from '../../services/actions/burger';
+import { openModal, setTab } from '../../services/actions/burger';
 import { useDrag } from "react-dnd";
+import { useHistory } from 'react-router-dom';
 
 const bun = "Булки";
 const sauce = "Соусы";
@@ -44,12 +43,12 @@ const Card = (props: any) => {
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const current = useSelector((state: RootStateOrAny) => state.burger.tab);
-  const modalItem = useSelector((state: RootStateOrAny) => state.burger.modal);
   const items = useSelector((state: RootStateOrAny) => state.burger.ingredients);
 
   function clickTab(e: any) {
-    dispatch({ type: SET_TAB, tab: e });
+    dispatch(setTab(e));
     document.getElementById(e + "-list")?.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
@@ -69,25 +68,16 @@ const BurgerIngredients = () => {
       if (dy < resdy) { res = item; resdy = dy }
     });
     if (res !== current)
-      dispatch({ type: SET_TAB, tab: res });
+      dispatch(setTab(res));
   }
 
-  function clickItem(el: object) {
-    dispatch({ type: OPEN_MODAL, item: el });
+  const clickItem = (el: any) => {
+    dispatch(openModal(el));
+    history.replace({pathname: `/ingredient/${el?._id}`})
   }
 
   return (
     <div className={ingredientStyles.ingredient}>
-      {modalItem &&
-        <Modal
-          message={'Детали заказа'}
-          isOpen={modalItem ? true : false}
-          onClose={() => { dispatch({ type: CLOSE_MODAL }) }}
-        > <IngredientDetails
-            ingredient={modalItem}
-          />
-        </Modal>
-      }
       <div className={ingredientStyles.burger}>
         <p className="text text_type_main-large">
           Соберите бургер

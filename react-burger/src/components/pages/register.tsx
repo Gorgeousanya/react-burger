@@ -1,7 +1,6 @@
 import styles from './pages.module.css';
-import AppHeader from '../app-header/app-header';
-import { Route, Redirect, useHistory, useLocation } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { Redirect, useHistory } from 'react-router-dom';
+import { useState, useRef } from 'react';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import { register } from '../../services/actions/auth';
@@ -36,7 +35,6 @@ export default function RegisterPage() {
 
     return (
         <div className={styles.App}>
-            <AppHeader />
             <div className={styles.inputs}>
                 <div className={styles.input}>
                     <p className="text text_type_main-medium">
@@ -45,28 +43,26 @@ export default function RegisterPage() {
                 </div>
                 <div className={styles.input}>
                     <Input
-                        type={'text'}
-                        placeholder={'Имя'}
+                        type='text'
+                        placeholder='Имя'
                         onChange={onChange}
                         value={form.name}
-                        name={'name'}
+                        name='name'
                         error={false}
                         ref={inputRef}
                         errorText={'Ошибка'}
-                        size={'default'}
                     />
                 </div>
                 <div className={styles.input}>
                     <Input
-                        type={'text'}
-                        placeholder={'E-mail'}
+                        type='text'
+                        placeholder='E-mail'
                         onChange={onChange}
                         value={form.email}
-                        name={'email'}
+                        name='email'
                         error={false}
                         ref={inputRef}
                         errorText={'Ошибка'}
-                        size={'default'}
                     />
                 </div>
                 <div className={styles.input}>

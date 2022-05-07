@@ -49,7 +49,6 @@ export const getOrderID = (data) => {
                 })
                 .then(checkResponse)
                 .then(obj => {
-                    console.log(obj)
                     dispatch({
                         type: GET_ORDER_SUCCESS,
                         data: obj
@@ -107,5 +106,43 @@ export const changeSortIngredient = (drag, hover) => {
         type: CHANGE_SORT,
         drag,
         hover
+    }
+}
+
+export const openModal = (el) => {
+    return {
+        type: OPEN_MODAL, 
+        item: el 
+    }
+}
+
+export const closeModal = () => {
+    return {
+        type: CLOSE_MODAL, 
+    }
+}
+
+export const setTab = (e) => {
+    return {
+        type: SET_TAB, 
+        tab: e
+    }
+}
+
+export const openModalOrder = () => {
+    return {
+        type: OPEN_MODAL_ORDER
+    }
+}
+
+export const closeModalOrder = () => {
+    return {
+        type: CLOSE_MODAL_ORDER, 
+    }
+}
+
+export const resetOrder = () => {
+    return {
+        type: CLEAR_ORDER, 
     }
 }

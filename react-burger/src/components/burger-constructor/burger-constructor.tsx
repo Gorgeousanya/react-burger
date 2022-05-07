@@ -8,8 +8,7 @@ import { ingredientPropTypes } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from "react-dnd";
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
-import { OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER, CLEAR_ORDER } from '../../services/actions/burger';
-import { getOrderID, deleteIngredient, addIngredient, changeSortIngredient } from '../../services/actions/burger';
+import { getOrderID, deleteIngredient, addIngredient, changeSortIngredient, resetOrder, closeModalOrder, openModalOrder } from '../../services/actions/burger';
 import { useHistory } from 'react-router-dom';
 
 
@@ -33,6 +32,10 @@ const Constructor = ({ item, index }: any) => {
     }
   });
 
+  const onClose = () => {
+    dispatch(deleteIngredient(item?.uuid));
+  }
+
   dragRef(dropTarget(ref));
 
   return (
@@ -42,7 +45,7 @@ const Constructor = ({ item, index }: any) => {
         text={item?.name}
         price={item?.price}
         thumbnail={item?.image}
-        handleClose={() => { dispatch(deleteIngredient(item?.uuid)); }}
+        handleClose={onClose}
       />
     </div>
   )
@@ -53,14 +56,14 @@ const BurgerConstructor = () => {
   const constructor = useSelector((state: RootStateOrAny) => state.burger.constructor ?? []);
   const bun = constructor.find((ingredient: any) => ingredient?.type === 'bun');
   const other = constructor.filter((ingredient: any) => ingredient?.type && ingredient?.type !== 'bun');
-  const order = useSelector((state: RootStateOrAny) => state.burger.order);
   const open = useSelector((state: RootStateOrAny) => state.burger.modalOrder);
   const history = useHistory();
   const loggedIn = useSelector((store: RootStateOrAny) => store.auth.loggedIn);
+  
   const total = React.useMemo(
     () =>
       constructor
-        ? constructor?.filter((ingredient: any) => ingredient?.price).reduce((sum: any, current: any) => sum + current.price, 0)
+        ? constructor.filter((ingredient: any) => ingredient?.price).reduce((sum: any, current: any) => sum + current.price, 0)
         : 0,
     [constructor]
   );
@@ -83,13 +86,16 @@ const BurgerConstructor = () => {
       const data = constructor.map(((item: any) => item._id));
       dispatch(getOrderID(data));
       setTimeout(() => {
-        dispatch({
-          type: OPEN_MODAL_ORDER
-        })
+        dispatch(openModalOrder())
       }, 1000)
     } else {
       history.push("/login");
     }
+  }
+
+  const onClose = () => {
+    dispatch(closeModalOrder()); 
+    dispatch(resetOrder());
   }
 
   const classNameContainer = `${constructorStyles.container} ${isDrop && constructorStyles.drop}`
@@ -97,10 +103,9 @@ const BurgerConstructor = () => {
   return (
     <React.Fragment>
       <Modal
-        message={order?.name || ''}
         isOpen={open}
-        onClose={() => { dispatch({ type: CLOSE_MODAL_ORDER }); dispatch({ type: CLEAR_ORDER }); }}
-      > <OrderDetails order={order} />
+        onClose={onClose}
+      > <OrderDetails />
       </Modal>
       <div className={classNameContainer} ref={dropTarget}>
         {
@@ -139,7 +144,7 @@ const BurgerConstructor = () => {
               <CurrencyIcon type="primary" />
             </p>
           </div>
-          <Button type="primary" size="large" onClick={() => { clickOrder() }} disabled={total === 0}>
+          <Button type="primary" size="large" onClick={clickOrder} disabled={total === 0}>
             Оформить заказ
           </Button>
         </div>

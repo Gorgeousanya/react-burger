@@ -1,12 +1,15 @@
 import done from '../../images/done.svg';
 import styles from './order.module.css';
-import PropTypes from 'prop-types';
+import { RootStateOrAny, useSelector } from 'react-redux';
 
-export default function OrderDetails(props: any) {
-  console.log(props.order)
+export default function OrderDetails() {
+  const order = useSelector((state: RootStateOrAny) => state.burger.order);
   return (
     <div className={styles.component} >
-      <p className="text text_type_digits-large">{props.order.order.number}</p>
+      <p className="text text_type_main-large">
+                        {order.name}
+                    </p>
+      <p className="text text_type_digits-large">{order.order.number}</p>
       <p className="text text_type_main-medium">
         идентификатор заказа
       </p>
@@ -20,8 +23,5 @@ export default function OrderDetails(props: any) {
   )
 }
 
-OrderDetails.propTypes = {
-  order: PropTypes.object,
-}
 
 

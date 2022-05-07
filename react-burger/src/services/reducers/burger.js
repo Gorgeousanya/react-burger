@@ -72,7 +72,7 @@ export const burgerReducer = (state = burgerInitialState, action) => {
         case OPEN_MODAL:
             return {
                 ...state,
-                modal: action.item
+                modal: true
             }
         case OPEN_MODAL_ORDER:
             return {

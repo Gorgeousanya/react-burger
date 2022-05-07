@@ -1,8 +1,7 @@
 import styles from './pages.module.css';
-import AppHeader from '../app-header/app-header';
-import { Route, Redirect, useHistory, useLocation, RouteComponentProps, } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPassword } from '../../services/actions/auth';
 
@@ -46,7 +45,6 @@ export default function ResetPasswordPage() {
 
   return (
     <div className={styles.App}>
-      <AppHeader />
       <div className={styles.inputs}>
         <div className={styles.input}>
           <p className="text text_type_main-medium">
@@ -58,11 +56,11 @@ export default function ResetPasswordPage() {
         </div>
         <div className={styles.input}>
           <Input
-            type={'text'}
-            placeholder={'Введите код из письма'}
+            type='text'
+            placeholder='Введите код из письма'
             onChange={onChange}
             value={form.token}
-            name={'token'}
+            name='token'
             error={false}
             errorText={'Ошибка'}
             size={'default'}

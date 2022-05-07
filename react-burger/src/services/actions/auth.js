@@ -32,6 +32,14 @@ export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
 
+function checkResponse(res) {
+    if (res.ok) {
+        return res.json();
+    } else {
+        return Promise.reject(`Ошибка ${res.status}`);
+    }
+}
+
 export function register(email, password, name) {
     return function (dispatch) {
         dispatch({
@@ -48,21 +56,9 @@ export function register(email, password, name) {
                     name
                 }),
             })
-            .then(res => {
-                let authToken;
-                res.headers.forEach(header => {
-                    if (header.indexOf('Bearer') === 0) {
-                        authToken = header.split('Bearer ')[1];
-                    }
-                });
-                if (authToken) {
-                    setCookie('token', authToken);
-                }
-                return res.json();
-            })
+            .then(checkResponse)
             .then((res) => {
                 if (res.success) {
-                    console.log(res.user);
                     setCookie('token', res.accessToken);
                     localStorage.setItem('refreshToken', res.refreshToken);
                     dispatch({
@@ -70,6 +66,9 @@ export function register(email, password, name) {
                         user: res.user
                     });
                 }
+                else dispatch({
+                    type: REGISTER_FAILED
+                })
             })
             .catch((err) => {
                 console.log(err);
@@ -95,18 +94,7 @@ export function login(email, password) {
                     "password": password
                 }),
             })
-            .then(res => {
-                let authToken;
-                res.headers.forEach(header => {
-                    if (header.indexOf('Bearer') === 0) {
-                        authToken = header.split('Bearer ')[1];
-                    }
-                });
-                if (authToken) {
-                    setCookie('token', authToken);
-                }
-                return res.json();
-            })
+            .then(checkResponse)
             .then(data => {
                 if (data.success) {
                     setCookie('token', data.accessToken);
@@ -115,7 +103,10 @@ export function login(email, password) {
                         type: LOGIN_SUCCESS,
                         user: data.user
                     });
-                }
+                } else {
+                dispatch({
+                    type: LOGIN_FAILED
+                })}
             })
             .catch((err) => {
                 console.log(err);

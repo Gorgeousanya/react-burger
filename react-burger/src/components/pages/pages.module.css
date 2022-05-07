@@ -6,8 +6,8 @@
   .page_content {
     display: flex;
     flex-direction: row;
-    align-items: start;
-    justify-content: start;
+    align-items: flex-start;
+    justify-content: flex-start;
     flex-wrap: wrap;
     margin: 0 auto;
     width: 1280px;
@@ -64,20 +64,24 @@
   .text{
     margin-left: 40px;
   }
+
+  .ingredient{
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 60px;
+    padding-top: 32px;
+}
+
+.component{
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    top: 5%;
+}
   
   @media (max-width: 1200px) {
     .App {
       overflow-x: scroll;
-    }
-  }
-  
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-  
-    to {
-      transform: rotate(360deg);
     }
   }
 

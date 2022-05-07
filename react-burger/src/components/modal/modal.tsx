@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, CloseIcon,} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useEffect } from 'react';
+import { Button, CloseIcon, } from '@ya.praktikum/react-developer-burger-ui-components';
 import ReactDOM from 'react-dom';
 import ModalOverlay from './modal-overlay';
 import styles from './modal.module.css';
@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 const modalRoot = document.getElementById('modals') || document.body;
 
 export default function Modal(props: any) {
-    React.useEffect(() => {
+    useEffect(() => {
         const handleEscape = (e: any) => {
             e.key === "Escape" && props.onClose();
         }
@@ -23,9 +23,6 @@ export default function Modal(props: any) {
             <ModalOverlay onClick={props.onClose} />
             <div className={styles.modal} >
                 <div className={styles.header}>
-                    <p className="text text_type_main-large">
-                        {props.message}
-                    </p>
                     <div className={styles.button}>
                         <Button type="secondary" size="small" onClick={props.onClose} >
                             <CloseIcon type="primary" />
@@ -39,7 +36,6 @@ export default function Modal(props: any) {
 }
 
 Modal.propTypes = {
-    message: PropTypes.string.isRequired,
     children: PropTypes.node,
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,

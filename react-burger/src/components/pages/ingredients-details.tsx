@@ -1,13 +1,28 @@
-import styles from './ingredient.module.css';
-import { ingredientPropTypes } from '../../utils/prop-types';
+import styles from './pages.module.css';
+import { getIngredientsData } from '../../services/actions/burger'
+import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
-export default function IngredientDetails(props: any) {
-  console.log(props.ingredient);
+const IngredientDetails = () => {
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getIngredientsData());
+  }, [dispatch]);
+
+  const { id } = useParams<{ id?: string }>();
+  const ingredients = useSelector((state: RootStateOrAny) => state.burger.ingredients);
+  const ingredient = ingredients?.find((ingredient: any) => ingredient._id === id);
+
   return (
     <div className={styles.component} >
-      <img src={props.ingredient.image_large} alt="image_large" />
+      <p className="text text_type_main-large">
+        Детали ингредиента
+      </p>
+      <img src={ingredient?.image_large} alt="image_large" />
       <p className="text text_type_main-medium">
-        {props.ingredient.name}
+        {ingredient?.name}
       </p>
       <div className={styles.ingredient}>
         <div>
@@ -15,7 +30,7 @@ export default function IngredientDetails(props: any) {
             Калории, ккал
           </p>
           <p className="text text_type_main-default text_color_inactive">
-            {props.ingredient.calories}
+            {ingredient?.calories}
           </p>
         </div>
         <div>
@@ -23,7 +38,7 @@ export default function IngredientDetails(props: any) {
             Белки, г
           </p>
           <p className="text text_type_main-default text_color_inactive">
-            {props.ingredient.proteins}
+            {ingredient?.proteins}
           </p>
         </div>
         <div>
@@ -31,7 +46,7 @@ export default function IngredientDetails(props: any) {
             Жиры, г
           </p>
           <p className="text text_type_main-default text_color_inactive">
-            {props.ingredient.fat}
+            {ingredient?.fat}
           </p>
         </div>
         <div>
@@ -39,7 +54,7 @@ export default function IngredientDetails(props: any) {
             Углеводы, г
           </p>
           <p className="text text_type_main-default text_color_inactive">
-            {props.ingredient.carbohydrates}
+            {ingredient?.carbohydrates}
           </p>
         </div>
       </div>
@@ -47,6 +62,4 @@ export default function IngredientDetails(props: any) {
   )
 }
 
-IngredientDetails.propTypes = {
-  ingredient: ingredientPropTypes,
-}
+export default IngredientDetails;

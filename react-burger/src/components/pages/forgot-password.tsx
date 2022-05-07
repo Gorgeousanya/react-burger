@@ -1,5 +1,4 @@
 import styles from './pages.module.css';
-import AppHeader from '../app-header/app-header';
 import { useHistory, Redirect } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
@@ -34,7 +33,6 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className={styles.App}>
-      <AppHeader />
         <div className={styles.inputs}>
           <div className={styles.input}>
             <p className="text text_type_main-medium">
@@ -43,11 +41,11 @@ export default function ForgotPasswordPage() {
           </div>
           <div className={styles.input}>
             <Input
-              type={'text'}
-              placeholder={'E-mail'}
+              type='text'
+              placeholder='E-mail'
               onChange={onChange}
               value={form.email}
-              name={'email'}
+              name='email'
               error={false}
               errorText={'Ошибка'}
               size={'default'}

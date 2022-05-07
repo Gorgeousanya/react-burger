@@ -1,8 +1,7 @@
 import styles from './pages.module.css';
-import AppHeader from '../app-header/app-header';
 import { Redirect } from 'react-router-dom';
 import { useState, useRef } from 'react';
-import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import { updateUser, logout } from '../../services/actions/auth';
 
@@ -10,12 +9,13 @@ export default function ProfilePage() {
   const inputRef = useRef(null)
   const dispatch = useDispatch();
   const user = useSelector((state: RootStateOrAny) => state.auth.user);
-  console.log(user);
   const loggedIn = useSelector((state: RootStateOrAny) => state.auth.loggedIn);
   const [form, setForm] = useState({ ...user, password: "" }); 
+  const [isSame, setSame] = useState(true);
 
   const onChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setSame(false);
   }
 
   const onSubmit = (e: any) => {
@@ -25,6 +25,7 @@ export default function ProfilePage() {
 
   const onReset = () => {
     setForm({ ...user });
+    setSame(true);
   };
 
   const onLogout = () => {
@@ -38,7 +39,6 @@ export default function ProfilePage() {
 
   return (
     <div className={styles.App}>
-      <AppHeader />
       <main className={styles.page_content}>
         <div className={styles.buttons}>
           <Button type="secondary" size="large" >
@@ -65,54 +65,47 @@ export default function ProfilePage() {
         <div className={styles.buttons}>
           <div className={styles.input}>
             <Input
-              type={'text'}
-              placeholder={'Имя'}
+              type='text'
+              placeholder='Имя'
+              icon='EditIcon'
               onChange={onChange}
-              icon={'EditIcon'}
               value={form.name}
-              name={'name'}
+              name='name'
               error={false}
               ref={inputRef}
-              onIconClick={() => { }}
-              errorText={'Ошибка'}
-              size={'default'}
             />
           </div>
           <div className={styles.input}>
             <Input
-              type={'text'}
-              placeholder={'Логин'}
+              type='text'
+              placeholder='Логин'
               onChange={onChange}
-              icon={'EditIcon'}
+              icon='EditIcon'
               value={form.email}
-              name={'email'}
+              name='email'
               error={false}
               ref={inputRef}
-              onIconClick={() => { }}
               errorText={'Ошибка'}
-              size={'default'}
             />
           </div>
           <div className={styles.input}>
             <Input
-              type={'text'}
-              placeholder={'Пароль'}
+              type='text'
+              placeholder='Пароль'
               onChange={onChange}
-              icon={'EditIcon'}
+              icon='EditIcon'
               value={form.password}
-              name={'password'}
+              name='password'
               error={false}
               ref={inputRef}
-              onIconClick={() => { }}
               errorText={'Ошибка'}
-              size={'default'}
             />
           </div>
           <div className={styles.save}>
-            <Button type='secondary' onClick={onReset}>
+            <Button type='secondary' onClick={onReset} disabled={isSame} >
               Отмена
             </Button>
-            <Button onClick={onSubmit}>
+            <Button onClick={onSubmit} disabled={isSame}>
               Сохранить
             </Button>
           </div>

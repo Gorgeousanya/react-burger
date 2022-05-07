@@ -1,36 +1,54 @@
 import headerStyles from './app-header.module.css';
-import { Button, Logo, BurgerIcon, ListIcon, ProfileIcon, } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useHistory } from 'react-router-dom';
+import { Logo, BurgerIcon, ListIcon, ProfileIcon, } from '@ya.praktikum/react-developer-burger-ui-components';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 
 const AppHeader = () => {
-  const history = useHistory();
-
+  const home = useRouteMatch("/");
+    const list = useRouteMatch("/list");
+    const profile = useRouteMatch("/profile");
   return (
     <header className={headerStyles.header}>
       <div className={headerStyles.content}>
-        <Button type="secondary" size="large" onClick={() => {
-          history.replace({ pathname: '/' });
-        }}>
-          <div className={headerStyles.content}><BurgerIcon type="primary" />
-            <p className={headerStyles.icon}>Конструктор</p>
+      <NavLink exact to="/" className={headerStyles.button} activeClassName={headerStyles.button_active}>
+          <div className={headerStyles.content}><BurgerIcon type={home?.isExact ? "primary" : "secondary"} />
+            <p className={headerStyles.button_text} >Конструктор</p>
           </div>
-        </Button>
-        <Button type="secondary" size="large" disabled={true}>
-          <div className={headerStyles.content}><ListIcon type="secondary" />
-            <p className={headerStyles.icon}>Лента заказов</p>
+        </NavLink>
+        <NavLink exact to="/list" className={headerStyles.button} activeClassName={headerStyles.button_active}>
+          <div className={headerStyles.content}><ListIcon type={list ? "primary" : "secondary"} />
+            <p className={headerStyles.button_text}>Лента заказов</p>
           </div>
-        </Button>
+        </NavLink>
         <div className={headerStyles.logo}>
           <Logo />
         </div>
-        <div className={headerStyles.profile}>
-          <Button type="secondary" size="large" onClick={() => {
-            history.replace({ pathname: '/profile' });
-          }}>
-            <div className={headerStyles.content}><ProfileIcon type="primary" />
-              <p className={headerStyles.icon}>Личный кабинет</p></div>
-          </Button>
+          <NavLink exact to="/profile" className={headerStyles.button} activeClassName={headerStyles.button_active}>
+            <div className={headerStyles.content}><ProfileIcon  type={profile ? "primary" : "secondary"} />
+              <p className={headerStyles.button_text}>Личный кабинет</p></div>
+          </NavLink>
+      {/* <div className={headerStyles.content}>
+        <NavLink exact to="/" className={headerStyles.icon} activeClassName={headerStyles.active}>
+          <div className={headerStyles.content}>
+            <BurgerIcon type={mainPageMatch?.isExact ? "primary" : "secondary"} />
+            <p className={headerStyles.icon}>Конструктор</p>
+          </div>
+        </NavLink>
+        <NavLink exact to="/list" className={headerStyles.icon} activeClassName={headerStyles.active}>
+          <div className={headerStyles.content}>
+            <ListIcon type={feedPageMatch ? "primary" : "secondary"} />
+            <p className={headerStyles.icon}>Лента заказов</p>
+          </div>
+        </NavLink>
+        <div className={headerStyles.logo}>
+          <Logo />
         </div>
+        <NavLink exact to="/profile" className={headerStyles.profile} activeClassName={headerStyles.active}>
+          <div className={headerStyles.content}>
+            <ProfileIcon type={profilePageMatch ? "primary" : "secondary"} />
+            <p className={headerStyles.icon}>Личный кабинет</p>
+          </div>
+        </NavLink>
+      </div> */}
       </div>
     </header>
   )
