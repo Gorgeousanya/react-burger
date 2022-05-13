@@ -2,17 +2,22 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredientsData } from '../../services/actions/burger';
 import { getUser } from '../../services/actions/auth'
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import { HomePage, LoginPage, ProfilePage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientDetails } from '../pages';
 import ProtectedRoute from '../protected-routes';
 import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
-import { closeModal } from '../../services/actions/burger';
+import { closeModal, resetOrder, closeModalOrder, } from '../../services/actions/burger';
+import OrderDetails from '../order-details/order-details';
 
 function App() {
   const dispatch = useDispatch();
   let modalItem = useSelector(state => state.burger.modal);
+  let open = useSelector(state => state.burger.modalOrder);
+  const order = useSelector(state => state.burger.order);
   const history = useHistory();
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
   useEffect(
     () => {
@@ -27,10 +32,15 @@ function App() {
     history.push('/');
   }
 
+  const onCloseOrder = () => {
+    dispatch(closeModalOrder()); 
+    dispatch(resetOrder());
+  }
+
   return (
     <div>
       <AppHeader />
-      <Switch>
+      <Switch location={background || location}>
         <Route path="/" exact={true}>
           <HomePage />
         </Route>
@@ -53,15 +63,25 @@ function App() {
           <IngredientDetails />
         </Route>
       </Switch>
-      {modalItem &&
-        <Route path="/ingredient/:id" exact={true}>
-          <Modal
-            isOpen={modalItem}
-            onClose={onClose}
-          > <IngredientDetails />
-          </Modal>
-        </Route>
-      }
+      {background && (
+          <Route
+            path='/ingredients/:id'
+            children={
+            <Modal
+              isOpen={modalItem}
+              onClose={onClose}
+            > <IngredientDetails />
+            </Modal>
+            }
+          />
+        )}
+      { order?.order?.number &&
+      <Modal
+      isOpen={open}
+      onClose={onCloseOrder}
+    > <OrderDetails />
+    </Modal>
+            }
     </div>
   );
 }

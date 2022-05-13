@@ -1,4 +1,7 @@
 import {
+    checkResponse
+} from '../utils';
+import {
     baseUrl
 } from '../../utils/api';
 export const SET_TAB = 'SET_TAB';
@@ -20,14 +23,6 @@ export const CLEAR_ORDER = 'CLEAR_ORDER';
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
 export const CHANGE_SORT = 'CHANGE_SORT';
-
-function checkResponse(res) {
-    if (res.ok) {
-        return res.json();
-    } else {
-        return Promise.reject(`Ошибка ${res.status}`);
-    }
-}
 
 export const getOrderID = (data) => {
 

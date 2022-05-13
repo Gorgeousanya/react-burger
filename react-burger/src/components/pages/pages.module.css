@@ -77,6 +77,8 @@
     text-align: center;
     position: relative;
     top: 5%;
+    margin: 0 auto;
+    width: 680px;
 }
   
   @media (max-width: 1200px) {

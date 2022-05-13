@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { openModal, setTab } from '../../services/actions/burger';
 import { useDrag } from "react-dnd";
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 
 const bun = "Булки";
 const sauce = "Соусы";
@@ -17,26 +17,35 @@ const Card = (props: any) => {
     type: "ingredients",
     item: props.item
   });
+  const location = useLocation();
+  const ingredientId = props.item['_id'];
   const constructor = useSelector((state: RootStateOrAny) => state.burger.constructor);
   const count = constructor?.filter((item: any) => item._id === props.item._id).length;
   return (
     <React.Fragment>
-      <div className={ingredientStyles.card} onClick={props.onClick} ref={dragRef}>
-        {
-          count !== 0 && count &&
-          <div className={ingredientStyles.counter}>
-            <Counter count={count} size="default" />
+      <Link
+        key={ingredientId}
+        to={{
+          pathname: `/ingredients/${ingredientId}`,
+          state: { background: location },
+        }}>
+        <div className={ingredientStyles.card} onClick={props.onClick} ref={dragRef}>
+          {
+            count !== 0 && count &&
+            <div className={ingredientStyles.counter}>
+              <Counter count={count} size="default" />
+            </div>
+          }
+          <img src={props.item.image_large} className={ingredientStyles.img} alt={props.item.name} />
+          <div className={ingredientStyles.map}>
+            <p className="text text_type_digits-default"  >
+              {props.item.price}
+              <CurrencyIcon type="primary" />
+            </p>
           </div>
-        }
-        <img src={props.item.image_large} className={ingredientStyles.img} alt={props.item.name}/>
-        <div className={ingredientStyles.map}>
-          <p className="text text_type_digits-default"  >
-            {props.item.price}
-            <CurrencyIcon type="primary" />
-          </p>
+          <p className="text text_type_main-default" >{props.item.name}</p>
         </div>
-        <p className="text text_type_main-default" >{props.item.name}</p>
-      </div>
+      </Link>
     </React.Fragment>
   )
 }
@@ -73,7 +82,7 @@ const BurgerIngredients = () => {
 
   const clickItem = (el: any) => {
     dispatch(openModal(el));
-    history.replace({pathname: `/ingredient/${el?._id}`})
+    console.log('click')
   }
 
   return (

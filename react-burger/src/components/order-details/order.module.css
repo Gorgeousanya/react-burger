@@ -1,6 +1,6 @@
 .component{
     overflow: hidden;
-    padding-bottom: 120px;
+    padding: 0 16px 80px 16px;
     text-align: center;
 }
 

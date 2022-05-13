@@ -1,19 +1,11 @@
 import styles from './pages.module.css';
-import { getIngredientsData } from '../../services/actions/burger'
-import { useSelector, RootStateOrAny, useDispatch } from 'react-redux';
+import { useSelector, RootStateOrAny} from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 
 const IngredientDetails = () => {
-  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(getIngredientsData());
-  }, [dispatch]);
-
   const { id } = useParams<{ id?: string }>();
   const ingredients = useSelector((state: RootStateOrAny) => state.burger.ingredients);
-  const ingredient = ingredients?.find((ingredient: any) => ingredient._id === id);
+  const ingredient = ingredients?.find((item: any) => item._id === id);
 
   return (
     <div className={styles.component} >

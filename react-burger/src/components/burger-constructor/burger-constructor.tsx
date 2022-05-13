@@ -2,13 +2,11 @@ import React from 'react';
 import { v4 as uuidv4 } from "uuid"
 import constructorStyles from './burger-constructor.module.css';
 import { Button, DragIcon, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from "react-dnd";
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
-import { getOrderID, deleteIngredient, addIngredient, changeSortIngredient, resetOrder, closeModalOrder, openModalOrder } from '../../services/actions/burger';
+import { getOrderID, deleteIngredient, addIngredient, changeSortIngredient, openModalOrder } from '../../services/actions/burger';
 import { useHistory } from 'react-router-dom';
 
 
@@ -56,7 +54,6 @@ const BurgerConstructor = () => {
   const constructor = useSelector((state: RootStateOrAny) => state.burger.constructor ?? []);
   const bun = constructor.find((ingredient: any) => ingredient?.type === 'bun');
   const other = constructor.filter((ingredient: any) => ingredient?.type && ingredient?.type !== 'bun');
-  const open = useSelector((state: RootStateOrAny) => state.burger.modalOrder);
   const history = useHistory();
   const loggedIn = useSelector((store: RootStateOrAny) => store.auth.loggedIn);
   
@@ -93,20 +90,10 @@ const BurgerConstructor = () => {
     }
   }
 
-  const onClose = () => {
-    dispatch(closeModalOrder()); 
-    dispatch(resetOrder());
-  }
-
   const classNameContainer = `${constructorStyles.container} ${isDrop && constructorStyles.drop}`
 
   return (
     <React.Fragment>
-      <Modal
-        isOpen={open}
-        onClose={onClose}
-      > <OrderDetails />
-      </Modal>
       <div className={classNameContainer} ref={dropTarget}>
         {
           bun

@@ -31,3 +31,11 @@ export function getCookie(name) {
   export function deleteCookie(name) {
     setCookie(name, null, { expires: -1 });
   }
+
+  export function checkResponse(res) {
+    if (res.ok) {
+        return res.json();
+    } else {
+        return Promise.reject(`Ошибка ${res.status}`);
+    }
+}

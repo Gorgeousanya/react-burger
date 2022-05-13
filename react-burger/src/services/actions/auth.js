@@ -1,7 +1,8 @@
 import {
     setCookie,
     deleteCookie,
-    getCookie
+    getCookie, 
+    checkResponse
 } from '../utils';
 import {
     baseUrl
@@ -31,14 +32,6 @@ export const FORGOT_PASSWORD_FAILED = "FORGOT_PASSWORD_FAILED";
 export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
-
-function checkResponse(res) {
-    if (res.ok) {
-        return res.json();
-    } else {
-        return Promise.reject(`Ошибка ${res.status}`);
-    }
-}
 
 export function register(email, password, name) {
     return function (dispatch) {
