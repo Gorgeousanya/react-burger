@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getIngredientsData } from '../../services/actions/burger';
 import { getUser } from '../../services/actions/auth'
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
-import { HomePage, LoginPage, ProfilePage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientDetails } from '../pages';
+import { HomePage, LoginPage, ProfilePage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientDetails } from '../../pages';
 import ProtectedRoute from '../protected-routes';
 import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';

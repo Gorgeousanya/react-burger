@@ -3,7 +3,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { resetPassword } from '../../services/actions/auth';
+import { resetPassword } from '../services/actions/auth';
 
 export default function ResetPasswordPage() {
   const auth = useSelector(state => state.auth);

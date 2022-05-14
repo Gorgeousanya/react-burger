@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { useState, useRef } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
-import { updateUser, logout } from '../../services/actions/auth';
+import { updateUser, logout } from '../services/actions/auth';
 
 export default function ProfilePage() {
   const inputRef = useRef(null)

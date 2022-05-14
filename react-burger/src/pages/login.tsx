@@ -2,7 +2,7 @@ import styles from './pages.module.css';
 import { Redirect, useHistory } from 'react-router-dom';
 import { useState, useRef } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { login } from '../../services/actions/auth';
+import { login } from '../services/actions/auth';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 
 export default function LoginPage() {
