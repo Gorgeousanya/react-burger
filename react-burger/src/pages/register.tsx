@@ -41,6 +41,7 @@ export default function RegisterPage() {
                         Регистрация
                     </p>
                 </div>
+                <form onSubmit={onSubmit}>
                 <div className={styles.input}>
                     <Input
                         type='text'
@@ -68,9 +69,10 @@ export default function RegisterPage() {
                 <div className={styles.input}>
                     <PasswordInput onChange={onChange} value={form.password} name={'password'} />
                 </div>
-                <Button type="primary" size="medium" onClick={onSubmit}>
+                <Button type="primary" size="medium" >
                     Зарегистрироваться
                 </Button>
+                </form>
             </div>
             <div className={styles.save}>
                 <p className="text text_type_main-default text_color_inactive">

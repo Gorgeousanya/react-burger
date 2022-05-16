@@ -39,7 +39,7 @@ export default function ProfilePage() {
 
   return (
     <div className={styles.App}>
-      <main className={styles.page_content} onSubmit={onSubmit}>
+      <main className={styles.page_content}>
         <div className={styles.buttons}>
           <Button type="secondary" size="large" >
             <p className="text text_type_main-medium">
@@ -62,7 +62,7 @@ export default function ProfilePage() {
             </p>
           </div>
         </div>
-        <form className={styles.buttons} noValidate>
+        <form className={styles.buttons} onSubmit={onSubmit}>
           <div className={styles.input}>
             <Input
               type='text'
@@ -105,7 +105,7 @@ export default function ProfilePage() {
             <Button type='secondary' onClick={onReset} disabled={isSame} >
               Отмена
             </Button>
-            <Button disabled={isSame}>
+            <Button  disabled={isSame}>
               Сохранить
             </Button>
           </div>

@@ -18,7 +18,7 @@ export default function ForgotPasswordPage() {
   const onSubmit = (e: any) => {
     e.preventDefault();
     dispatch(forgotPassword(form.email));
-    history.push({ pathname: '/reset-password', state: { background: history.location.pathname } });
+    history.push({ pathname: '/reset-password', state: { prevPathname: history.location.pathname } });
   };
 
   if (loggedIn) {
@@ -39,6 +39,7 @@ export default function ForgotPasswordPage() {
               Восстановление пароля
             </p>
           </div>
+          <form onSubmit={onSubmit}>
           <div className={styles.input}>
             <Input
               type='text'
@@ -51,9 +52,10 @@ export default function ForgotPasswordPage() {
               size={'default'}
             />
           </div>
-          <Button type="primary" size="medium" onClick={onSubmit}>
+          <Button type="primary" size="medium" >
             Восстановить
           </Button>
+          </form>
         </div>
         <div className={styles.save}>
           <p className="text text_type_main-default text_color_inactive">

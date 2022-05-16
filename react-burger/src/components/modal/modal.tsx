@@ -17,7 +17,7 @@ export default function Modal(props: any) {
             document.removeEventListener("keydown", handleEscape);
         }
     }, [props.onClose])
-    // if (!props.isOpen) return null;
+    if (!props.isOpen) return null;
     return ReactDOM.createPortal(
         <>
             <ModalOverlay onClick={props.onClose} />

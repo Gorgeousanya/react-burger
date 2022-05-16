@@ -18,33 +18,33 @@ const Card = (props: any) => {
     item: props.item
   });
   const location = useLocation();
-  const ingredientId = props.item['_id'];
   const constructor = useSelector((state: RootStateOrAny) => state.burger.constructor);
   const count = constructor?.filter((item: any) => item._id === props.item._id).length;
   return (
     <React.Fragment>
-      <Link
-        key={ingredientId}
+       <Link
+        className={ingredientStyles.link}
+        key={props.item._id}
         to={{
-          pathname: `/ingredients/${ingredientId}`,
+          pathname: `/ingredients/${props.item._id}`,
           state: { background: location },
         }}>
-        <div className={ingredientStyles.card} onClick={props.onClick} ref={dragRef}>
-          {
-            count !== 0 && count &&
-            <div className={ingredientStyles.counter}>
-              <Counter count={count} size="default" />
-            </div>
-          }
-          <img src={props.item.image_large} className={ingredientStyles.img} alt={props.item.name} />
-          <div className={ingredientStyles.map}>
-            <p className="text text_type_digits-default"  >
-              {props.item.price}
-              <CurrencyIcon type="primary" />
-            </p>
+      <div className={ingredientStyles.card} onClick={props.onClick} ref={dragRef}>
+        {
+          count !== 0 && count &&
+          <div className={ingredientStyles.counter}>
+            <Counter count={count} size="default" />
           </div>
-          <p className="text text_type_main-default" >{props.item.name}</p>
+        }
+        <img src={props.item.image_large} className={ingredientStyles.img} alt={props.item.name}/>
+        <div className={ingredientStyles.map}>
+          <p className="text text_type_digits-default"  >
+            {props.item.price}
+            <CurrencyIcon type="primary" />
+          </p>
         </div>
+        <p className="text text_type_main-default" >{props.item.name}</p>
+      </div>
       </Link>
     </React.Fragment>
   )
@@ -52,7 +52,6 @@ const Card = (props: any) => {
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const current = useSelector((state: RootStateOrAny) => state.burger.tab);
   const items = useSelector((state: RootStateOrAny) => state.burger.ingredients);
 
@@ -82,7 +81,6 @@ const BurgerIngredients = () => {
 
   const clickItem = (el: any) => {
     dispatch(openModal(el));
-    console.log('click')
   }
 
   return (

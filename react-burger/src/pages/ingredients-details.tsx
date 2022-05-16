@@ -1,11 +1,13 @@
 import styles from './pages.module.css';
-import { useSelector, RootStateOrAny} from 'react-redux';
+import { useSelector, RootStateOrAny } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 const IngredientDetails = () => {
+
   const { id } = useParams<{ id?: string }>();
+  console.log(id)
   const ingredients = useSelector((state: RootStateOrAny) => state.burger.ingredients);
-  const ingredient = ingredients?.find((item: any) => item._id === id);
+  const ingredient = ingredients?.find((ingredient: any) => ingredient._id === id);
 
   return (
     <div className={styles.component} >

@@ -1,7 +1,7 @@
 import {
     setCookie,
     deleteCookie,
-    getCookie, 
+    getCookie,
     checkResponse
 } from '../utils';
 import {
@@ -124,9 +124,7 @@ export function updateToken() {
                     token: localStorage.getItem('refreshToken')
                 }),
             })
-            .then(res => {
-                return res.json();
-            })
+            .then(checkResponse)
             .then((res) => {
                 if (res.success) {
                     setCookie('token', res.accessToken);
@@ -159,9 +157,7 @@ export function logout() {
                     token: localStorage.getItem('refreshToken')
                 }),
             })
-            .then(res => {
-                return res.json();
-            })
+            .then(checkResponse)
             .then((data) => {
                 if (data.success) {
                     localStorage.removeItem('refreshToken');
@@ -192,9 +188,7 @@ export function getUser() {
                     Authorization: getCookie('token'),
                 },
             })
-            .then(res => {
-                return res.json();
-            })
+            .then(checkResponse)
             .then((data) => {
                 if (data.success) {
                     dispatch({
@@ -233,9 +227,7 @@ export function updateUser(email, name) {
                     name
                 }),
             })
-            .then(res => {
-                return res.json();
-            })
+            .then(checkResponse)
             .then((data) => {
                 console.log(data)
                 if (data.success) {
@@ -273,9 +265,7 @@ export function forgotPassword(email) {
                     email
                 }),
             })
-            .then(res => {
-                return res.json();
-            })
+            .then(checkResponse)
             .then((res) => {
                 if (res.success) {
                     dispatch({
@@ -307,9 +297,7 @@ export function resetPassword(password, token) {
                     token
                 }),
             })
-            .then(res => {
-                return res.json();
-            })
+            .then(checkResponse)
             .then((data) => {
                 if (data.success) {
                     dispatch({

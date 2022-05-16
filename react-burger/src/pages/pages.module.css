@@ -1,93 +1,93 @@
 .App {
-    overflow: scroll;
-    overflow-x: hidden;
-  }
-  
-  .page_content {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    width: 1280px;
-    height: 80vh;
-  }
+  overflow: scroll;
+  overflow-x: hidden;
+}
 
-  .buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    margin-top: 20vh;
-    text-align: start;
-    width: 34vw;
-  }
+.page_content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 1280px;
+  height: 80vh;
+}
 
-  .inputs{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 16vh;
-    margin-left: 35vw;
-    margin-bottom: 40px;
-    text-align: center;
-    width: 30vw;
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 20vh;
+  text-align: start;
+  width: 34vw;
+}
 
-  }
-  
-  .header {
-    background-color: #1C1C21;
-  }
+.inputs{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 16vh;
+  margin-left: 35vw;
+  margin-bottom: 40px;
+  text-align: center;
+  width: 30vw;
 
-  .input{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
+}
 
-  }
+.header {
+  background-color: #1C1C21;
+}
 
-  .save{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
-  }
+.input{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
 
-  .text{
-    margin-left: 40px;
-  }
+}
 
-  .ingredient{
-    display: flex;
-    justify-content: space-around;
-    padding-bottom: 60px;
-    padding-top: 32px;
+.save{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.text{
+  margin-left: 40px;
+}
+
+.ingredient{
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 60px;
+  padding-top: 32px;
 }
 
 .component{
-    overflow: hidden;
-    text-align: center;
-    position: relative;
-    top: 5%;
-    margin: 0 auto;
-    width: 680px;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+  top: 5%;
+  margin: 0 auto;
+  width: 680px;
 }
-  
-  @media (max-width: 1200px) {
-    .App {
-      overflow-x: scroll;
-    }
-  }
 
-  .input_size_default {
-    width: 400px;
-    min-height: 64px;
+@media (max-width: 1200px) {
+  .App {
+    overflow-x: scroll;
   }
+}
+
+.input_size_default {
+  width: 400px;
+  min-height: 64px;
+}

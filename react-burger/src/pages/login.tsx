@@ -1,12 +1,19 @@
 import styles from './pages.module.css';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useState, useRef } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { login } from '../services/actions/auth';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 
+interface LocationState {
+  from: {
+    pathname: string;
+  };
+}
+
 export default function LoginPage() {
   const history = useHistory();
+  const location = useLocation<LocationState>();
   const inputRef = useRef(null)
   const [form, setValue] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
@@ -31,7 +38,7 @@ export default function LoginPage() {
 
 if (loggedIn) {
   return (
-      <Redirect to={"/"} />
+      <Redirect to={location.state?.from || '/'} />
   );
 }
 
@@ -43,6 +50,7 @@ if (loggedIn) {
             Вход
           </p>
         </div>
+        <form onSubmit={onSubmit}>
         <div className={styles.input}>
           <Input
             type='text'
@@ -69,9 +77,10 @@ if (loggedIn) {
             size={'default'}
           />
         </div>
-        <Button type="primary" size="medium" onClick={onSubmit}>
+        <Button type="primary" size="medium" >
           Войти
         </Button>
+        </form>
       </div>
       <div className={styles.save}>
         <p className="text text_type_main-default text_color_inactive">

@@ -9,7 +9,7 @@ export default function ResetPasswordPage() {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
-  const background = history.location.state?.background;
+  const prevPathname = history.location.state;
   const [form, setForm] = useState({ password: "", token: "" });
 
   const onChange = (e) => {
@@ -31,7 +31,7 @@ export default function ResetPasswordPage() {
     }
   };
 
-  if (!background) {
+  if (!prevPathname) {
     return (
       <Redirect to={'/login'} />
     );
@@ -51,6 +51,7 @@ export default function ResetPasswordPage() {
             Восстановление пароля
           </p>
         </div>
+        <form onSubmit={onSubmit}>
         <div className={styles.input}>
           <PasswordInput onChange={onChange} value={form.password} name={'password'} />
         </div>
@@ -66,9 +67,10 @@ export default function ResetPasswordPage() {
             size={'default'}
           />
         </div>
-        <Button type="primary" size="medium" onClick={onSubmit}>
+        <Button type="primary" size="medium">
           Сохранить
         </Button>
+        </form>
       </div>
       <div className={styles.save}>
         <p className="text text_type_main-default text_color_inactive">
