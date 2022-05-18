@@ -1,9 +1,9 @@
 import {
     checkResponse
-} from '../utils';
+} from '../utils.ts';
 import {
     baseUrl
-} from '../../utils/api';
+} from '../../utils/api.ts';
 export const SET_TAB = 'SET_TAB';
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';

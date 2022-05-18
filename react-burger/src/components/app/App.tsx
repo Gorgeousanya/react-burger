@@ -1,19 +1,24 @@
-import { useEffect } from 'react';
- import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, FC } from 'react';
+ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
  import { getIngredientsData } from '../../services/actions/burger';
  import { getUser } from '../../services/actions/auth'
  import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
  import { HomePage, LoginPage, ProfilePage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientDetails } from '../../pages';
- import ProtectedRoute from '../protected-routes';
+ import ProtectedRoute from '../../components/protected-routes'
  import AppHeader from '../app-header/app-header';
- import Modal from '../modal/modal';
+ import {Modal} from '../modal/modal';
  import { closeModal } from '../../services/actions/burger';
 
- function App() {
+ type TLocation = {
+  from: Location;
+  background?: Location;
+}
+
+ const App:FC = () => {
    const dispatch = useDispatch();
-   let modalItem = useSelector(state => state.burger.modal);
+   let modalItem = useSelector((state: RootStateOrAny )=> state.burger.modal);
    const history = useHistory();
-   const location = useLocation();
+   const location = useLocation<TLocation>();
    let background = location.state && location.state.background;
 
    useEffect(
@@ -21,6 +26,7 @@ import { useEffect } from 'react';
        dispatch(getIngredientsData());
        if (localStorage.refreshToken)
        dispatch(getUser());
+       // @ts-ignore
        history.replace()
      },
      [dispatch]
@@ -34,7 +40,9 @@ import { useEffect } from 'react';
    return (
      <div>
        <AppHeader />
-       <Switch location={background || location}>
+       <Switch 
+       // @ts-ignore
+       location={background || location}>
          <Route path="/" exact={true}>
            <HomePage />
          </Route>

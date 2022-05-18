@@ -1,49 +1,53 @@
 import React from 'react';
 import ingredientStyles from './burger-ingredients.module.css';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropTypes } from '../../utils/prop-types';
-import PropTypes from 'prop-types';
+import { TIngredient } from '../../utils/types';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { openModal, setTab } from '../../services/actions/burger';
 import { useDrag } from "react-dnd";
-import { useHistory, useLocation, Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 const bun = "Булки";
 const sauce = "Соусы";
 const main = "Начинки";
 
-const Card = (props: any) => {
+type TCard = {
+  item: TIngredient,
+  onClick: ()=>void,
+}
+
+const Card: React.FC<TCard> = ({item, onClick}) => {
   const [, dragRef] = useDrag({
     type: "ingredients",
-    item: props.item
+    item: item
   });
   const location = useLocation();
   const constructor = useSelector((state: RootStateOrAny) => state.burger.constructor);
-  const count = constructor?.filter((item: any) => item._id === props.item._id).length;
+  const count = constructor?.filter((ingredient: any) => ingredient._id === item._id).length;
   return (
     <React.Fragment>
        <Link
         className={ingredientStyles.link}
-        key={props.item._id}
+        key={item._id}
         to={{
-          pathname: `/ingredients/${props.item._id}`,
+          pathname: `/ingredients/${item._id}`,
           state: { background: location },
         }}>
-      <div className={ingredientStyles.card} onClick={props.onClick} ref={dragRef}>
+      <div className={ingredientStyles.card} onClick={onClick} ref={dragRef}>
         {
           count !== 0 && count &&
           <div className={ingredientStyles.counter}>
             <Counter count={count} size="default" />
           </div>
         }
-        <img src={props.item.image_large} className={ingredientStyles.img} alt={props.item.name}/>
+        <img src={item.image_large} className={ingredientStyles.img} alt={item.name}/>
         <div className={ingredientStyles.map}>
           <p className="text text_type_digits-default"  >
-            {props.item.price}
+            {item.price}
             <CurrencyIcon type="primary" />
           </p>
         </div>
-        <p className="text text_type_main-default" >{props.item.name}</p>
+        <p className="text text_type_main-default" >{item.name}</p>
       </div>
       </Link>
     </React.Fragment>
@@ -79,7 +83,7 @@ const BurgerIngredients = () => {
       dispatch(setTab(res));
   }
 
-  const clickItem = (el: any) => {
+  const clickItem = (el: TIngredient) => {
     dispatch(openModal(el));
   }
 
@@ -136,9 +140,5 @@ const BurgerIngredients = () => {
   )
 }
 
-Card.propTypes = {
-  item: ingredientPropTypes.isRequired,
-  onClick: PropTypes.func.isRequired,
-}
 
 export default BurgerIngredients;

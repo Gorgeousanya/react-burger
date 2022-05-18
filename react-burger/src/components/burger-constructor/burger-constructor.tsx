@@ -2,18 +2,17 @@ import React from 'react';
 import { v4 as uuidv4 } from "uuid"
 import constructorStyles from './burger-constructor.module.css';
 import { Button, DragIcon, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../modal/modal';
+import {Modal} from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { ingredientPropTypes } from '../../utils/prop-types';
-import PropTypes from 'prop-types';
+import { TIngredient } from '../../utils/types';
 import { useDrag, useDrop } from "react-dnd";
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
 import { getOrderID, deleteIngredient, addIngredient, changeSortIngredient, resetOrder, closeModalOrder, openModalOrder } from '../../services/actions/burger';
 import { useHistory } from 'react-router-dom';
 
 
-const Constructor = ({ item, index }: any) => {
-  const ref = React.useRef(null);
+const Constructor: React.FC<TConstructor> = ({ item, index }) => {
+  const ref = React.useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({
     type: "ingredient",
@@ -60,7 +59,7 @@ const BurgerConstructor = () => {
   const history = useHistory();
   const loggedIn = useSelector((store: RootStateOrAny) => store.auth.loggedIn);
   
-  const total = React.useMemo(
+  const total: number = React.useMemo(
     () =>
       constructor
         ? constructor.filter((ingredient: any) => ingredient?.price).reduce((sum: any, current: any) => sum + current.price, 0)
@@ -154,9 +153,9 @@ const BurgerConstructor = () => {
 }
 
 
-Constructor.propTypes = {
-  item: ingredientPropTypes.isRequired,
-  index: PropTypes.number,
+type TConstructor = {
+  item: TIngredient,
+  index: number,
 }
 
 export default BurgerConstructor;

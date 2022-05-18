@@ -1,18 +1,18 @@
 import styles from './pages.module.css';
 import { Redirect, useHistory } from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPassword } from '../services/actions/auth';
 
 export default function ResetPasswordPage() {
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state: RootStateOrAny) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
   const prevPathname = history.location.state;
   const [form, setForm] = useState({ password: "", token: "" });
 
-  const onChange = (e) => {
+  const onChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -20,7 +20,7 @@ export default function ResetPasswordPage() {
     history.replace({ pathname: '/login' });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: any) => {
     e.preventDefault();
     dispatch(resetPassword(form.password, form.token));
     if (!auth?.loggedIn.resetPasswordFailed) {

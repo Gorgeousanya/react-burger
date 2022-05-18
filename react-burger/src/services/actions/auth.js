@@ -3,10 +3,10 @@ import {
     deleteCookie,
     getCookie,
     checkResponse
-} from '../utils';
+} from '../utils.ts';
 import {
     baseUrl
-} from '../../utils/api';
+} from '../../utils/api.ts';
 
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";

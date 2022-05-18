@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 const IngredientDetails = () => {
 
   const { id } = useParams<{ id?: string }>();
-  console.log(id)
   const ingredients = useSelector((state: RootStateOrAny) => state.burger.ingredients);
   const ingredient = ingredients?.find((ingredient: any) => ingredient._id === id);
 
