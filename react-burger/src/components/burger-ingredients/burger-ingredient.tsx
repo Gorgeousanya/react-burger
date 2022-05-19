@@ -21,9 +21,11 @@ const Card: React.FC<TCard> = ({item, onClick}) => {
     type: "ingredients",
     item: item
   });
+  
   const location = useLocation();
   const constructor = useSelector((state: RootStateOrAny) => state.burger.constructor);
   const count = constructor?.filter((ingredient: any) => ingredient._id === item._id).length;
+  
   return (
     <React.Fragment>
        <Link
@@ -59,7 +61,8 @@ const BurgerIngredients = () => {
   const current = useSelector((state: RootStateOrAny) => state.burger.tab);
   const items = useSelector((state: RootStateOrAny) => state.burger.ingredients);
 
-  function clickTab(e: any) {
+  function clickTab(e: string) {
+    console.log(e)
     dispatch(setTab(e));
     document.getElementById(e + "-list")?.scrollIntoView({
       behavior: 'smooth',

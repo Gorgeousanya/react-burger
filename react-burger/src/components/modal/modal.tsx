@@ -1,11 +1,11 @@
-import { useEffect, FC } from 'react';
+import { useEffect, FC, ReactNode } from 'react';
 import { Button, CloseIcon, } from '@ya.praktikum/react-developer-burger-ui-components';
 import ReactDOM from 'react-dom';
 import {ModalOverlay} from './modal-overlay';
 import styles from './modal.module.css';
 
 type TModal = {
-    children?: React.ReactNode,
+    children?: ReactNode,
     isOpen: boolean,
     onClose: ()=>void
 }
@@ -14,7 +14,7 @@ const modalRoot = document.getElementById('modals') || document.body;
 
 export const Modal: FC<TModal> = ({onClose, isOpen, children}) => {
     useEffect(() => {
-        const handleEscape = (e: any) => {
+        const handleEscape = (e: { key: string } ) => {
             e.key === "Escape" && onClose();
         }
         document.addEventListener("keydown", handleEscape);

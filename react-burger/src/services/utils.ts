@@ -32,23 +32,10 @@ export function deleteCookie(name: string) {
   setCookie(name, "", { expires: -1 });
 }
 
-export function checkResponse(res: CustomResponse) {
+export function checkResponse(res: Response) {
   if (res.ok) {
       return res.json();
   } else {
       return Promise.reject(`Ошибка ${res.status}`);
   }
-}
-
-export interface CustomResponse extends Body {
-  readonly headers: Headers;
-  readonly ok: boolean;
-  readonly redirected: boolean;
-  readonly status: number;
-  readonly statusText: string;
-  readonly trailer: Promise<Headers>;
-  readonly type: ResponseType;
-  readonly url: string;
-  clone(): Response;
-  json(): Promise<any>;
 }

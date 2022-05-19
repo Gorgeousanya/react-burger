@@ -11,11 +11,11 @@ export default function ForgotPasswordPage() {
   const loggedIn = useSelector((store: RootStateOrAny) => store.auth.loggedIn);
   const [form, setForm] = React.useState({ email: "" });
 
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e: any) => {
+  const onSubmit = (e: React.SyntheticEvent<Element, Event>) => {
     e.preventDefault();
     dispatch(forgotPassword(form.email));
     history.push({ pathname: '/reset-password', state: { prevPathname: history.location.pathname } });

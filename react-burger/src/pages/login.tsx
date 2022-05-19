@@ -1,6 +1,6 @@
 import styles from './pages.module.css';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
-import { useState, useRef } from 'react';
+import React, { useState, useRef, SyntheticEvent } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { login } from '../services/actions/auth';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
@@ -31,7 +31,7 @@ export default function LoginPage() {
     history.replace({ pathname: '/forgot-password' });
   };
 
-  const onSubmit = (e: React.SyntheticEvent<Element, Event>) => {
+  const onSubmit = (e: SyntheticEvent<Element, Event>) => {
     e.preventDefault();
     dispatch(login(form.email, form.password));
 };

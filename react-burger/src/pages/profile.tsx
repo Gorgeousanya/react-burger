@@ -1,24 +1,24 @@
 import styles from './pages.module.css';
 import { Redirect } from 'react-router-dom';
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import { updateUser, logout } from '../services/actions/auth';
 
 export default function ProfilePage() {
-  const inputRef = useRef(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   const dispatch = useDispatch();
   const user = useSelector((state: RootStateOrAny) => state.auth.user);
   const loggedIn = useSelector((state: RootStateOrAny) => state.auth.loggedIn);
   const [form, setForm] = useState({ ...user, password: "" }); 
-  const [isSame, setSame] = useState(true);
+  const [isSame, setSame] = useState<boolean>(true);
 
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setSame(false);
   }
 
-  const onSubmit = (e: any) => {
+  const onSubmit = (e: React.SyntheticEvent<Element, Event>) => {
     e.preventDefault();
     dispatch(updateUser(form.email, form.name));
   };

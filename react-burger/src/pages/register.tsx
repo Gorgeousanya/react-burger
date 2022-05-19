@@ -1,18 +1,18 @@
 import styles from './pages.module.css';
 import { Redirect, useHistory } from 'react-router-dom';
-import { useState, useRef } from 'react';
+import React, { useState, useRef} from 'react';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import { register } from '../services/actions/auth';
 
 export default function RegisterPage() {
     const history = useHistory();
-    const inputRef = useRef(null)
+    const inputRef = useRef<HTMLInputElement>(null)
     const [form, setValue] = useState({ email: '', password: '', name: '' });
     const dispatch = useDispatch();
     const loggedIn = useSelector((state: RootStateOrAny) => state.auth.loggedIn);
 
-    const onChange = (e: any) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
 
@@ -20,11 +20,9 @@ export default function RegisterPage() {
         history.replace({ pathname: '/login' });
     };
 
-    const onSubmit = (e: any) => {
+    const onSubmit = (e: React.SyntheticEvent<Element, Event>) => {
         e.preventDefault();
-        
         dispatch(register(form.email, form.password, form.name));
-        console.log("register", loggedIn?.loggedIn);
     };
 
     if (loggedIn) {
