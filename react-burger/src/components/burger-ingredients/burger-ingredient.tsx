@@ -1,95 +1,140 @@
 import React from 'react';
-//import data from '../../utils/data';
 import ingredientStyles from './burger-ingredients.module.css';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-detail/ingredients-details';
-import { ingredientPropTypes } from '../../utils/prop-types';
-import PropTypes from 'prop-types';
+import { TIngredient } from '../../utils/types';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { openModal, setTab } from '../../services/actions/burger';
+import { useDrag } from "react-dnd";
+import { useLocation, Link } from 'react-router-dom';
 
 const bun = "Булки";
 const sauce = "Соусы";
 const main = "Начинки";
 
-const Card = (props: any) => {
+type TCard = {
+  item: TIngredient,
+  onClick: ()=>void,
+}
+
+const Card: React.FC<TCard> = ({item, onClick}) => {
+  const [, dragRef] = useDrag({
+    type: "ingredients",
+    item: item
+  });
+  
+  const location = useLocation();
+  const constructor = useSelector((state: RootStateOrAny) => state.burger.constructor);
+  const count = constructor?.filter((ingredient: any) => ingredient._id === item._id).length;
+  
   return (
     <React.Fragment>
-      <div className={ingredientStyles.card} onClick={() => { props.setOpen(true); props.setName(props.name); }}>
-        <div className={ingredientStyles.counter}>
-          <Counter count={1} size="default" />
-        </div>
-        <img src={props.img} className={ingredientStyles.img} />
+       <Link
+        className={ingredientStyles.link}
+        key={item._id}
+        to={{
+          pathname: `/ingredients/${item._id}`,
+          state: { background: location },
+        }}>
+      <div className={ingredientStyles.card} onClick={onClick} ref={dragRef}>
+        {
+          count !== 0 && count &&
+          <div className={ingredientStyles.counter}>
+            <Counter count={count} size="default" />
+          </div>
+        }
+        <img src={item.image_large} className={ingredientStyles.img} alt={item.name}/>
         <div className={ingredientStyles.map}>
           <p className="text text_type_digits-default"  >
-            {props.price}
+            {item.price}
             <CurrencyIcon type="primary" />
           </p>
         </div>
-        <p className="text text_type_main-default" >{props.name}</p>
+        <p className="text text_type_main-default" >{item.name}</p>
       </div>
+      </Link>
     </React.Fragment>
   )
 }
 
-const BurgerIngredients = (props: any) => {
-  const [current, setCurrent] = React.useState('one');
-  const [open, setOpen] = React.useState(false);
-  const [ingredient, setIngredient] = React.useState('');
-  let prop = props.data?.filter((item: any) => item.name == ingredient) ;
+const BurgerIngredients = () => {
+  const dispatch = useDispatch();
+  const current = useSelector((state: RootStateOrAny) => state.burger.tab);
+  const items = useSelector((state: RootStateOrAny) => state.burger.ingredients);
+
+  function clickTab(e: string) {
+    console.log(e)
+    dispatch(setTab(e));
+    document.getElementById(e + "-list")?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+
+  function scrollIngredientsList() {
+    const arr = ["one", "two", "three"];
+    let pos = document.getElementById("ingredients-list")?.scrollTop || 0;
+    let res = "";
+    let resdy = 1000000;
+    let dy = 0;
+    arr.forEach(item => {
+      let offsetTopItem = document.getElementById(item + "-list")?.offsetTop || 0;
+      let offsetTop = document.getElementById("ingredients-list")?.offsetTop || 0;
+      dy = Math.abs(offsetTopItem - offsetTop - pos);
+      if (dy < resdy) { res = item; resdy = dy }
+    });
+    if (res !== current)
+      dispatch(setTab(res));
+  }
+
+  const clickItem = (el: TIngredient) => {
+    dispatch(openModal(el));
+  }
+
   return (
     <div className={ingredientStyles.ingredient}>
-
-      <Modal
-        message={'Детали заказа'}
-        isOpen={open}
-        onClose={() => setOpen(false)}
-      > <IngredientDetails
-          ingredient={prop}
-        />
-      </Modal>
       <div className={ingredientStyles.burger}>
         <p className="text text_type_main-large">
           Соберите бургер
         </p>
       </div >
       <div className={ingredientStyles.tab}>
-        <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+        <Tab value="one" active={current === 'one'} onClick={clickTab}>
           {bun}
         </Tab>
-        <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+        <Tab value="two" active={current === 'two'} onClick={clickTab}>
           {sauce}
         </Tab>
-        <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+        <Tab value="three" active={current === 'three'} onClick={clickTab}>
           {main}
         </Tab>
       </div>
-      <div className={ingredientStyles.main}>
+      <div className={ingredientStyles.main} id="ingredients-list" onScroll={scrollIngredientsList}>
         <div >
-          <p className="text text_type_main-medium">
+          <p className="text text_type_main-medium" id="one-list">
             {bun}
           </p>
-          <div className={ingredientStyles.map}>
-            {props.data?.map((item: any) =>
+          <div className={ingredientStyles.map} >
+            {items?.map((item: any) =>
               item.type === "bun" &&
-              <Card key={item._id} img={item.image_large} price={item.price} name={item.name} setOpen={setOpen} setName={setIngredient} />)
+              <Card key={item._id} item={item} onClick={() => { clickItem(item) }} />)
             }
           </div>
-          <p className="text text_type_main-medium">
+          <p className="text text_type_main-medium" id="two-list">
             {sauce}
           </p>
           <div className={ingredientStyles.map}>
-            {props.data?.map((item: any) =>
+            {items?.map((item: any) =>
               item.type === "sauce" &&
-              <Card key={item._id} img={item.image_large} price={item.price} name={item.name} setOpen={setOpen} setName={setIngredient} />)
+              <Card key={item._id} item={item} onClick={() => { clickItem(item) }} />)
             }
           </div>
-          <p className="text text_type_main-medium">
+          <p className="text text_type_main-medium" id="three-list">
             {main}
           </p>
           <div className={ingredientStyles.map}>
-            {props.data?.map((item: any) =>
+            {items?.map((item: any) =>
               item.type === "main" &&
-              <Card key={item._id} img={item.image_large} price={item.price} name={item.name} setOpen={setOpen} setName={setIngredient} />)
+              <Card key={item._id} item={item} onClick={() => { clickItem(item) }} />)
             }
           </div>
         </div>
@@ -98,16 +143,5 @@ const BurgerIngredients = (props: any) => {
   )
 }
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropTypes.isRequired),
-}
-
-Card.propTypes = {
-  img: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  setOpen: PropTypes.func.isRequired,
-  setName: PropTypes.func.isRequired,
-}
 
 export default BurgerIngredients;

@@ -1,52 +1,61 @@
-.ingredient{
+.ingredient {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     width: 50%;
-    max-height: 912px;
+    max-height: 1012px;
 }
 
-.tab{
+.tab {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     margin-bottom: 40px;
 }
 
-.main{
+.main {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    overflow-y: scroll; 
+    overflow-y: scroll;
     overflow-x: hidden;
-    height: 700px;
+    height: 60vh;
 }
 
-.map{
+.map {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
 }
 
-.img{
+.img {
     width: 240px;
 }
 
-.card{
+.card {
     width: 272px;
-    margin: 16px; 
-    display: flex; 
+    margin: 16px;
+    display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
-.counter{
+.counter {
     position: relative;
     left: 140px;
 }
 
-.burger{
+.burger {
     margin: 40px 0 20px 0;
+}
+
+.p {
+    text-align: start;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
 }
