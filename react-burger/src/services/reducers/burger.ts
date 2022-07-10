@@ -1,20 +1,34 @@
-import { CHANGE_SORT, SET_TAB, ADD_INGREDIENT, DELETE_INGREDIENT, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_ERROR, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_ERROR, CLEAR_ORDER, SET_ORDER, OPEN_MODAL, OPEN_MODAL_ORDER, CLOSE_MODAL, CLOSE_MODAL_ORDER,
+import { TBurgerActions, CHANGE_SORT, SET_TAB, ADD_INGREDIENT, DELETE_INGREDIENT, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_ERROR, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_ERROR, RESET_ORDER, OPEN_MODAL, OPEN_MODAL_ORDER, CLOSE_MODAL, CLOSE_MODAL_ORDER,
 } from '../actions/burger';
+import { TIngredient, IOrderState } from '../../utils/types';
 
-const burgerInitialState = { 
+type TBurgerState = {
+    tab: string,
+    ingredients: Array<TIngredient>,
+    ingredientsLoading: boolean,
+    ingredientsError: boolean,
+    constructor: Array<TIngredient>,
+    modal: boolean,
+    modalOrder: boolean,
+    order: IOrderState,
+    orderLoading: boolean,
+    orderError: boolean,
+  };
+
+const burgerInitialState: TBurgerState = { 
     tab: "one",
     ingredients: [],
     ingredientsLoading: false,
-    ingredientsError: null,
+    ingredientsError: false,
     constructor: [],
     modal: false,
     modalOrder: false,
-    order: {},
+    order: {} as IOrderState,
     orderLoading: false,
-    orderError: null,
+    orderError: false,
 };
 
-export const burgerReducer = (state = burgerInitialState, action) => {
+export const burgerReducer = (state = burgerInitialState, action: TBurgerActions) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {
@@ -33,7 +47,6 @@ export const burgerReducer = (state = burgerInitialState, action) => {
             return {
                 ...state,
                 ingredientsLoading: false,
-                ingredientsError: action.error
             } 
         case GET_ORDER_REQUEST:
             return {
@@ -53,7 +66,6 @@ export const burgerReducer = (state = burgerInitialState, action) => {
             return {
                 ...state,
                 orderLoading: false,
-                orderError: action.error
             }           
         case ADD_INGREDIENT:
             return {
@@ -67,7 +79,7 @@ export const burgerReducer = (state = burgerInitialState, action) => {
             return {
                 ...state,
                 constructor: 
-                    [...state.constructor].filter((item) => item.uuid!==action.id)
+                    [...state.constructor].filter((item: TIngredient) => item.uuid!==action.id)
             }
         case OPEN_MODAL:
             return {
@@ -93,21 +105,16 @@ export const burgerReducer = (state = burgerInitialState, action) => {
             return {
                 ...state,
                 tab: action.tab
-            }           
-        case SET_ORDER:
-            return {
-                ...state,
-                order: action.data
-            }
-        case CLEAR_ORDER:
+            }  
+        case RESET_ORDER:
             return {
                 ...state,
                 order: {},
                 constructor: [],
             }            
         case CHANGE_SORT:
-            const items = state.constructor.filter(item => item.type!=="bun");
-            const bun = state.constructor.filter(ingredient => ingredient.type === 'bun');
+            const items = state.constructor.filter((item: TIngredient) => item.type!=="bun");
+            const bun = state.constructor.filter((ingredient: TIngredient) => ingredient.type === 'bun');
             const other=[...items];
             const drag = other.splice(action.drag, 1)[0];
             other.splice(action.hover, 0, drag)
@@ -119,3 +126,4 @@ export const burgerReducer = (state = burgerInitialState, action) => {
             return state;
     }
 }
+

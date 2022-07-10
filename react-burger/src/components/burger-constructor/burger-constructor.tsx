@@ -83,6 +83,7 @@ const BurgerConstructor = () => {
   const clickOrder = () => {
     if (loggedIn) {
       const data = constructor.map(((item: any) => item._id));
+      console.log(data)
       dispatch(getOrderID(data));
       setTimeout(() => {
         dispatch(openModalOrder())
@@ -94,6 +95,7 @@ const BurgerConstructor = () => {
 
   const onClose = () => {
     dispatch(closeModalOrder()); 
+    console.log(open)
     dispatch(resetOrder());
   }
 

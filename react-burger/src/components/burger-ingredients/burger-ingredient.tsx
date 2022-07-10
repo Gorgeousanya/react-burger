@@ -13,44 +13,44 @@ const main = "Начинки";
 
 type TCard = {
   item: TIngredient,
-  onClick: ()=>void,
+  onClick: () => void,
 }
 
-const Card: React.FC<TCard> = ({item, onClick}) => {
+const Card: React.FC<TCard> = ({ item, onClick }) => {
   const [, dragRef] = useDrag({
     type: "ingredients",
     item: item
   });
-  
+
   const location = useLocation();
   const constructor = useSelector((state: RootStateOrAny) => state.burger.constructor);
   const count = constructor?.filter((ingredient: any) => ingredient._id === item._id).length;
-  
+
   return (
     <React.Fragment>
-       <Link
+      <Link
         className={ingredientStyles.link}
         key={item._id}
         to={{
           pathname: `/ingredients/${item._id}`,
           state: { background: location },
         }}>
-      <div className={ingredientStyles.card} onClick={onClick} ref={dragRef}>
-        {
-          count !== 0 && count &&
-          <div className={ingredientStyles.counter}>
-            <Counter count={count} size="default" />
+        <div className={ingredientStyles.card} onClick={onClick} ref={dragRef}>
+          {
+            count !== 0 && count &&
+            <div className={ingredientStyles.counter}>
+              <Counter count={count} size="default" />
+            </div>
+          }
+          <img src={item.image_large} className={ingredientStyles.img} alt={item.name} />
+          <div className={ingredientStyles.map}>
+            <p className="text text_type_digits-default"  >
+              {item.price}
+              <CurrencyIcon type="primary" />
+            </p>
           </div>
-        }
-        <img src={item.image_large} className={ingredientStyles.img} alt={item.name}/>
-        <div className={ingredientStyles.map}>
-          <p className="text text_type_digits-default"  >
-            {item.price}
-            <CurrencyIcon type="primary" />
-          </p>
+          <p className="text text_type_main-default" >{item.name}</p>
         </div>
-        <p className="text text_type_main-default" >{item.name}</p>
-      </div>
       </Link>
     </React.Fragment>
   )
@@ -92,11 +92,9 @@ const BurgerIngredients = () => {
 
   return (
     <div className={ingredientStyles.ingredient}>
-      <div className={ingredientStyles.burger}>
-        <p className="text text_type_main-large">
-          Соберите бургер
-        </p>
-      </div >
+      <p className="text text_type_main-large mt-10 mb-5">
+        Соберите бургер
+      </p>
       <div className={ingredientStyles.tab}>
         <Tab value="one" active={current === 'one'} onClick={clickTab}>
           {bun}
