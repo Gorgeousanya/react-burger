@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import styles from './pages.module.css';
 import {
-    wsConnectionClosedAction,
-    wsConnectionStartAction,
-  } from '../services/actions/feed';
+  wsConnectionClosedAction,
+  wsConnectionStartAction,
+} from '../services/actions/feed';
 import OrderItem from '../components/order-item/order-item';
-import { TOrder, TOrders } from '../utils/types';
+import { TOrder } from '../utils/types';
 import { ProfileNav } from '../components/profile-nav/profile-nav';
 
-export default function ProfileOrders () {
-  const order = useSelector((store: RootStateOrAny) => store.feed.orders);
+export default function ProfileOrders() {
+  const order = useSelector((store) => store.feed.orders);
   const [orders, setOrders] = useState<TOrder[]>([]);
   const dispatch = useDispatch();
 
@@ -34,20 +34,20 @@ export default function ProfileOrders () {
   }
   return (
     <div className={styles.page_content}>
-        <ProfileNav/>
-        <div className={styles.main}>
+      <ProfileNav />
+      <div className={styles.main}>
         {orders?.map((item: TOrder) => (
-                    <OrderItem
-                        key={item._id}
-                        id={item._id}
-                        number={item.number}
-                        createdAt={item.createdAt}
-                        name={item.name}
-                        ingredientsId={item.ingredients}
-                        status={item.status}
-                    />
-                ))}
-                </div>
+          <OrderItem
+            key={item._id}
+            id={item._id}
+            number={item.number}
+            createdAt={item.createdAt}
+            name={item.name}
+            ingredientsId={item.ingredients}
+            status={item.status}
+          />
+        ))}
+      </div>
     </div>
   );
 }

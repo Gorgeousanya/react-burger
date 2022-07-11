@@ -1,18 +1,21 @@
 import { getCookie } from "../utils";
-import { wsActions as wsActionTypes  } from '../actions/feed';
-import { Middleware } from "redux";
-export const socketMiddleware = (wsUrl: string, wsActions: typeof wsActionTypes ): Middleware<{}> => {
-    return ((store) => {
-        let socket: WebSocket | null = null;
+import { wsActions as wsActionTypes } from '../actions/feed';
+import { Middleware, MiddlewareAPI } from "redux";
+import { AppDispatch, RootState } from "../utils";
+
+export const socketMiddleware = (wsUrl: string, wsActions: typeof wsActionTypes): Middleware<{}> => {
+  return (store: MiddlewareAPI<AppDispatch, RootState>) => {
+    let socket: WebSocket | null = null;
+
     return next => (action) => {
       const { dispatch } = store;
       const { type, withToken } = action;
-      const { wsInit, onOpen, onClose, onError, onGetOrders } = wsActions;  
+      const { wsInit, onOpen, onClose, onError, onGetOrders } = wsActions;
       const accessCookie = getCookie('token')?.split(' ')[1];
       const token = withToken ? accessCookie : '';
 
       if (type === wsInit) {
-            socket = new WebSocket(withToken ? `${wsUrl}?token=${token}` : `${wsUrl}/all`);
+        socket = new WebSocket(withToken ? `${wsUrl}?token=${token}` : `${wsUrl}/all`);
       }
 
       if (socket) {
@@ -33,5 +36,5 @@ export const socketMiddleware = (wsUrl: string, wsActions: typeof wsActionTypes 
       }
       next(action);
     };
-    }) 
+  }
 }; 

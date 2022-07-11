@@ -27,7 +27,7 @@ export interface IWsConnectionClosedAction {
 
 export interface IWsGetAction {
     readonly type: typeof WS_GET_ORDERS;
-    readonly orders: TOrders[];
+    readonly orders: TOrders;
 }
 
 export interface IOpenWsModal {
@@ -55,7 +55,7 @@ export const wsConnectionClosedAction = (): IWsConnectionClosedAction => ({
     type: WS_CONNECTION_CLOSED
 });
 
-export const wsGetAction = (orders: TOrders[]): IWsGetAction => ({
+export const wsGetAction = (orders: TOrders): IWsGetAction => ({
     type: WS_GET_ORDERS,
     orders
 });

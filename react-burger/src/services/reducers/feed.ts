@@ -11,13 +11,13 @@ import {
 
 type TFeedState = {
   wsConnected: boolean;
-  orders: Array<TOrders>;
+  orders: TOrders;
   wsModal: boolean;
 };
 
 const feedInitialState: TFeedState = {
   wsConnected: false,
-  orders: [],
+  orders: {} as TOrders,
   wsModal: true,
 };
 

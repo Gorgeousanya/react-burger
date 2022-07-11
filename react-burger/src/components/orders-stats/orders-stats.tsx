@@ -1,18 +1,17 @@
 import { FC } from 'react';
 import { TOrder } from '../../utils/types';
 import styles from './orders-stats.module.css';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import {  useSelector } from '../../services/hooks';
 
 export const OrdersStats: FC = () => {
-  const feed = useSelector((store: RootStateOrAny) => store.feed);
-  const order = feed.orders
+  const order = useSelector((store) => store.feed.orders);
 
   if (!order) {
     return null;
   }
 
-  const done = order.orders?.filter((item: TOrder) => item.status === 'done').slice(0, 5);;
-  const pending = order.orders?.filter((item: TOrder) => item.status === 'pending').slice(0, 5);
+  const done = order?.orders?.filter((item) => item.status === 'done').slice(0, 5);
+  const pending = order?.orders?.filter((item) => item.status === 'pending').slice(0, 5);
 
   return (
     <main className={styles.main}>
@@ -21,7 +20,7 @@ export const OrdersStats: FC = () => {
           <p className="text text_type_main-medium mt-10">
             Готовы:
           </p>
-          {done?.map((order: TOrder) => (
+          {done?.map((order) => (
             <p className={`text text_type_digits-default mt-2 ${styles.doneNumber}`} key={order._id}>{order.number}</p>
           ))}
         </div>

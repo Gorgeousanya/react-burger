@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import styles from './order-item.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from '../../services/hooks';
-import { RootStateOrAny } from 'react-redux';
 import { TIngredient, TOrderInfo } from '../../utils/types';
 import { formatStatus } from '../../services/utils';
 import { wsOpenModal } from '../../services/actions/feed';
@@ -13,7 +12,7 @@ import { ru } from 'date-fns/locale';
 const OrderItem: FC<TOrderInfo> = ({ number, createdAt, name, ingredientsId, id, status }) => {
     const location = useLocation();
     const dispatch = useDispatch();
-    const ingredients = useSelector((store: RootStateOrAny) => store.burger.ingredients);
+    const ingredients = useSelector((store) => store.burger.ingredients);
     const orderIngredients = ingredients.filter((ingredient: TIngredient) => ingredientsId.includes(ingredient._id)).reverse();
     const orderIngredientsShow = orderIngredients.length > 5 ? orderIngredients.slice(0, 5) : orderIngredients;
     const orderIngredientsHidden = orderIngredients.length > 5 ? orderIngredients.length - 5 : 0;
@@ -33,8 +32,8 @@ const OrderItem: FC<TOrderInfo> = ({ number, createdAt, name, ingredientsId, id,
                 <div className={styles.data}>
                     <p className="text text_type_digits-default">#{number}</p>
                     <p className="text text_type_main-default text_color_inactive">{formatRelative(new Date(createdAt), new Date(), {
-    locale: ru,
-  })}</p>
+                        locale: ru,
+                    })}</p>
                 </div>
                 <p className="text text_type_main-medium pt-6 pb-4">{name}</p>
                 <p className={styles.status}>{formatStatus(status)}</p>

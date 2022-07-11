@@ -51,7 +51,10 @@ import {
     };
 
     const authInitialState = { 
-        user: null,
+        user: {
+            name: '',
+            email: ''
+        },
         registerRequest: false,
         registerError: false,
         loggedIn: false,
@@ -71,7 +74,7 @@ import {
         resetPasswordError: false,
     };
 
-    export const authReducer = (state = authInitialState, action: TAuthActions) => {
+    export const authReducer = (state = authInitialState, action: TAuthActions):TAuthState => {
         switch (action.type) {
             case REGISTER_REQUEST: {
                 return {
@@ -149,7 +152,10 @@ import {
                     return {
                         ...state,
                         loggedIn: false,
-                        user: null,
+                        user: {
+                            name: '',
+                            email: ''
+                        },
                     };
                 }
                 case LOGOUT_ERROR: {

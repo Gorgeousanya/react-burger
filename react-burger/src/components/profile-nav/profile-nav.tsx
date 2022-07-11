@@ -1,57 +1,56 @@
 import React from 'react';
 import styles from './profile-nav.module.css';
-import { Button} from '@ya.praktikum/react-developer-burger-ui-components';
-import { TIngredient } from '../../utils/types';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { Redirect, useHistory } from 'react-router-dom';
 import { logout } from '../../services/actions/auth';
 
 export const ProfileNav: React.FC = () => {
-    const dispatch = useDispatch();
-    const loggedIn = useSelector((state: RootStateOrAny) => state.auth.loggedIn);
-    const history = useHistory(); 
+  const dispatch = useDispatch();
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const history = useHistory();
 
-    const onLogout = () => {
-        dispatch(logout());
-        if (!loggedIn) {
-          return (
-            <Redirect to={"/login"} />
-          );
-        }
-      };
-    
-      const onProfile = () => {
-        console.log("profile")
-        history.replace({ pathname: '/profile' });
-      };
-    
-      const onProfileOrder = () => {
-          console.log("profile/order")
-          history.replace({ pathname: '/profile/orders' });
-      };
-  
-    return (
-      <React.Fragment>
-       <div className={styles.buttons}>
-          <Button type="secondary" size="large" onClick={onProfile}>
-            <p className="text text_type_main-medium">
-              Профиль
-            </p>
-          </Button>
-          <Button type="secondary" size="large" onClick={onProfileOrder}>
-            <p className="text text_type_main-medium">
-              История заказов
-            </p>
-          </Button>
-          <Button type="secondary" size="large" onClick={onLogout}>
-            <p className="text text_type_main-medium">
-              Выход
-            </p>
-          </Button>
-          <p className="text text_type_main-default text_color_inactive mt-20 ml-10">
-            В этом разделе Вы можете изменить свои персональные данные
+  const onLogout = () => {
+    dispatch(logout());
+    if (!loggedIn) {
+      return (
+        <Redirect to={"/login"} />
+      );
+    }
+  };
+
+  const onProfile = () => {
+    console.log("profile")
+    history.replace({ pathname: '/profile' });
+  };
+
+  const onProfileOrder = () => {
+    console.log("profile/order")
+    history.replace({ pathname: '/profile/orders' });
+  };
+
+  return (
+    <React.Fragment>
+      <div className={styles.buttons}>
+        <Button type="secondary" size="large" onClick={onProfile}>
+          <p className="text text_type_main-medium">
+            Профиль
           </p>
-        </div>
-      </React.Fragment>
-    )
-  }
+        </Button>
+        <Button type="secondary" size="large" onClick={onProfileOrder}>
+          <p className="text text_type_main-medium">
+            История заказов
+          </p>
+        </Button>
+        <Button type="secondary" size="large" onClick={onLogout}>
+          <p className="text text_type_main-medium">
+            Выход
+          </p>
+        </Button>
+        <p className="text text_type_main-default text_color_inactive mt-20 ml-10">
+          В этом разделе Вы можете изменить свои персональные данные
+        </p>
+      </div>
+    </React.Fragment>
+  )
+}

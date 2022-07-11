@@ -1,8 +1,8 @@
 import { FC, useEffect } from 'react';
-import { TOrder, TOrders } from '../utils/types';
+import { TOrder } from '../utils/types';
 import { OrdersStats } from '../components/orders-stats/orders-stats';
 import OrderItem from '../components/order-item/order-item';
-import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import {
   wsConnectionClosedAction,
   wsConnectionStartAction,
@@ -20,7 +20,7 @@ export const FeedPage: FC = () => {
     };
   }, [dispatch]);
 
-  const orders = useSelector((store: RootStateOrAny) => store.feed.orders.orders);
+  const orders = useSelector((store) => store.feed.orders.orders);
   
   return (
     <main className={styles.page_content}>

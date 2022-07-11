@@ -1,9 +1,9 @@
 import { Route, Redirect, RouteProps } from "react-router-dom";
-import { useSelector, RootStateOrAny } from 'react-redux';
+import {  useSelector } from '../services/hooks';
 import { FC } from 'react';
 
 const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
-    const loggedIn = useSelector((store: RootStateOrAny) => store.auth.loggedIn);
+    const loggedIn = useSelector((store) => store.auth.loggedIn);
     return (
         <Route
             {...rest}

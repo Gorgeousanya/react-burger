@@ -28,19 +28,19 @@ const burgerInitialState: TBurgerState = {
     orderError: false,
 };
 
-export const burgerReducer = (state = burgerInitialState, action: TBurgerActions) => {
+export const burgerReducer = (state = burgerInitialState, action: TBurgerActions): TBurgerState => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {
                 ...state,
                 ingredientsLoading: true,
-                ingredientsError: null
+                ingredientsError: false
             }   
         case GET_INGREDIENTS_SUCCESS:
             return {
                 ...state,
                 ingredientsLoading: false,
-                ingredientsError: null,
+                ingredientsError: false,
                 ingredients: action.data
             }                       
         case GET_INGREDIENTS_ERROR:
@@ -52,15 +52,15 @@ export const burgerReducer = (state = burgerInitialState, action: TBurgerActions
             return {
                 ...state,
                 orderLoading: true,
-                orderError: null,
-                order: {}
+                orderError: false,
+                order: {} as IOrderState
             }
         case GET_ORDER_SUCCESS:
             return {
                 ...state,
                 orderLoading: false,
-                orderError: null,
-                order: action.data
+                orderError: false,
+                order: action.data 
             }
         case GET_ORDER_ERROR:
             return {
@@ -109,7 +109,7 @@ export const burgerReducer = (state = burgerInitialState, action: TBurgerActions
         case RESET_ORDER:
             return {
                 ...state,
-                order: {},
+                order: {} as IOrderState,
                 constructor: [],
             }            
         case CHANGE_SORT:

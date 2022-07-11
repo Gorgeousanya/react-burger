@@ -1,5 +1,5 @@
 import { useEffect, FC } from 'react';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { getIngredientsData } from '../../services/actions/burger';
 import { getUser } from '../../services/actions/auth'
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
@@ -17,8 +17,8 @@ type TLocation = {
 
 const App: FC = () => {
   const dispatch = useDispatch();
-  let modalItem = useSelector((state: RootStateOrAny) => state.burger.modal);
-  let modalWs = useSelector((state: RootStateOrAny)=> state.feed.wsModal)
+  let modalItem = useSelector((state) => state.burger.modal);
+  let modalWs = useSelector((state)=> state.feed.wsModal)
   const history = useHistory();
   const location = useLocation<TLocation>();
   let background = location.state && location.state.background;

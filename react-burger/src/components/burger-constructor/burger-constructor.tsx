@@ -6,7 +6,7 @@ import {Modal} from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { TIngredient } from '../../utils/types';
 import { useDrag, useDrop } from "react-dnd";
-import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { getOrderID, deleteIngredient, addIngredient, changeSortIngredient, resetOrder, closeModalOrder, openModalOrder } from '../../services/actions/burger';
 import { useHistory } from 'react-router-dom';
 
@@ -52,17 +52,17 @@ const Constructor: React.FC<TConstructor> = ({ item, index }) => {
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const constructor = useSelector((state: RootStateOrAny) => state.burger.constructor ?? []);
-  const bun = constructor.find((ingredient: any) => ingredient?.type === 'bun');
-  const other = constructor.filter((ingredient: any) => ingredient?.type && ingredient?.type !== 'bun');
-  const open = useSelector((state: RootStateOrAny) => state.burger.modalOrder);
+  const constructor = useSelector((store) => store.burger.constructor ?? []);
+  const bun = constructor.find((ingredient) => ingredient?.type === 'bun');
+  const other = constructor.filter((ingredient) => ingredient?.type && ingredient?.type !== 'bun');
+  const open = useSelector((store) => store.burger.modalOrder);
   const history = useHistory();
-  const loggedIn = useSelector((store: RootStateOrAny) => store.auth.loggedIn);
+  const loggedIn = useSelector((store) => store.auth.loggedIn);
   
   const total: number = React.useMemo(
     () =>
       constructor
-        ? constructor.filter((ingredient: any) => ingredient?.price).reduce((sum: any, current: any) => sum + current.price, 0)
+        ? constructor.filter((ingredient) => ingredient?.price).reduce((sum, current) => sum + current.price, 0)
         : 0,
     [constructor]
   );
@@ -82,7 +82,7 @@ const BurgerConstructor = () => {
 
   const clickOrder = () => {
     if (loggedIn) {
-      const data = constructor.map(((item: any) => item._id));
+      const data = constructor.map(((item) => item._id));
       console.log(data)
       dispatch(getOrderID(data));
       setTimeout(() => {
@@ -124,7 +124,7 @@ const BurgerConstructor = () => {
         }
         <div className={constructorStyles.main}>
           {other &&
-            other?.map((item: any, i: any) =>
+            other?.map((item, i) =>
               (<Constructor key={item?.uuid} item={item} index={i} />))
           }
         </div>

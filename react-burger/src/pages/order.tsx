@@ -1,7 +1,7 @@
 import styles from './pages.module.css';
 import { formatRelative } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import { TIngredient, TOrder, TOrderInfo } from '../utils/types';
 import { useParams } from 'react-router-dom';
 import { formatStatus } from '../services/utils'
@@ -9,9 +9,9 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 
 const OrderPage: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
-  const orders = useSelector((state: RootStateOrAny) => state.feed.orders);
-  const order = orders?.orders?.find((item: any) => item._id === id);
-  const ingredients = useSelector((store: RootStateOrAny) => store.burger.ingredients);
+  const orders = useSelector((state) => state.feed.orders);
+  const order = orders?.orders?.find((item) => item._id === id);
+  const ingredients = useSelector((store) => store.burger.ingredients);
   const orderIngredients = ingredients?.filter((ingredient: TIngredient) => order?.ingredients.includes(ingredient._id));
 
   const totalPrice = orderIngredients.reduce((total: number, cur: TIngredient) => {
@@ -20,12 +20,19 @@ const OrderPage: React.FC = () => {
     return total;
   }, 0);
 
+  if (!order)
+  return (
+    <main className={styles.modal} >
+    <p className="text text_type_main-medium mt-30"> Подождите, идет загрузка...</p>
+    </main>
+  )
+
   return (
     <main className={styles.modal} >
       <p className="text text_type_digits-default ">#{order?.number}</p>
       <div className={styles.content}>
         <p className="text text_type_main-medium mt-10"> {order?.name}</p>
-        <p className={styles.status}>{formatStatus(order?.status)}</p>
+        <p className={styles.status}>{formatStatus(order?.status||'')}</p>
         <p className="text text_type_main-medium mt-6 mb-3">
           Состав:
         </p>
@@ -41,10 +48,10 @@ const OrderPage: React.FC = () => {
             </div>
           </div>
         ))}
-        <div className={styles.ingredients}>
-          <p className="text text_type_main-default text_color_inactive ">{formatRelative(new Date(order?.createdAt), new Date(), {
+        <div className={styles.row}>
+          <p className="text text_type_main-default text_color_inactive ">{order ? formatRelative(new Date(order.createdAt), new Date(), {
     locale: ru,
-  })}</p>
+  }) : ''}</p>
           <div className={styles.total}>
             <p className="text text_type_digits-default mr-2 "> {totalPrice}</p>
             <CurrencyIcon type="primary" />

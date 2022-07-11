@@ -1,12 +1,12 @@
 import styles from './pages.module.css';
 import { Redirect, useHistory } from 'react-router-dom';
 import React, { useState } from 'react';
-import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPassword } from '../services/actions/auth';
 
 export default function ResetPasswordPage() {
-  const auth = useSelector((state: RootStateOrAny) => state.auth);
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
   const prevPathname = history.location.state;
@@ -23,7 +23,7 @@ export default function ResetPasswordPage() {
   const onSubmit = (e: React.SyntheticEvent<Element, Event>) => {
     e.preventDefault();
     dispatch(resetPassword(form.password, form.token));
-    if (!auth?.loggedIn.resetPasswordFailed) {
+    if (!auth?.resetPasswordError) {
       history.push('/login');
     }
     else {

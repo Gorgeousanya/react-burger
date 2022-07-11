@@ -1,14 +1,14 @@
 import styles from './pages.module.css';
 import React, { useState, useRef } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import { updateUser} from '../services/actions/auth';
 import { ProfileNav } from '../components/profile-nav/profile-nav';
 
 export default function ProfilePage() {
   const inputRef = useRef<HTMLInputElement>(null)
   const dispatch = useDispatch();
-  const user = useSelector((state: RootStateOrAny) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
   const [form, setForm] = useState({ ...user, password: "" });
   const [isSame, setSame] = useState<boolean>(true);
 
@@ -23,7 +23,7 @@ export default function ProfilePage() {
   };
 
   const onReset = () => {
-    setForm({ ...user });
+    setForm({ ...user, password: form.password });
     setSame(true);
   };
 

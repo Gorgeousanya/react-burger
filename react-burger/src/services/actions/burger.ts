@@ -37,7 +37,7 @@ export interface IGetOrderRequestAction {
 
 export interface IGetOrderSuccessAction {
     readonly type: typeof GET_ORDER_SUCCESS;
-    readonly data: ReadonlyArray<IOrderState>;
+    readonly data: IOrderState;
 }
 
 export interface IGetOrderErrorAction {
@@ -50,7 +50,7 @@ export interface IGetIngredientsRequestAction {
 
 export interface IGetIngredientsSuccessAction {
     readonly type: typeof GET_INGREDIENTS_SUCCESS;
-    readonly data: ReadonlyArray<TIngredient>;
+    readonly data: Array<TIngredient>;
 }
 
 export interface IGetIngredientsErrorAction {
