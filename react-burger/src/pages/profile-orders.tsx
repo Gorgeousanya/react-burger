@@ -25,7 +25,7 @@ export default function ProfileOrders() {
 
   useEffect(() => {
     if (order) {
-      setOrders(order!.orders!);
+      setOrders(order!.orders);
     }
   }, [order]);
 

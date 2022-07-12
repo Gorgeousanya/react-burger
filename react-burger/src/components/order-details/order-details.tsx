@@ -4,7 +4,7 @@ import { useSelector } from '../../services/hooks';
 
 export default function OrderDetails() {
   const order = useSelector((state) => state.burger.order.order);
-  if (!order.success)
+  if (!order?.success)
     return (
       <p className="text text_type_main-large mb-15"> Ваш заказ загружается...</p>
     )
