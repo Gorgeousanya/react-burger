@@ -19,6 +19,7 @@ const OrderPage: React.FC = () => {
   const orders = useSelector((state) => state.feed.orders);
   const order = orders?.orders?.find((item) => item._id === id);
   const ingredients = useSelector((store) => store.burger.ingredients);
+  const payload = location.pathname.split('/')[1]=='feed'? '/all' : ''
   const orderIngredients = ingredients?.filter((ingredient: TIngredient) => order?.ingredients.includes(ingredient._id));
 
   const totalPrice = orderIngredients.reduce((total: number, cur: TIngredient) => {
@@ -30,7 +31,7 @@ const OrderPage: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(wsConnectionStartAction(location.pathname.split('/')[1]=='feed'? false : true));
+    dispatch(wsConnectionStartAction( location.pathname.split('/')[1]=='feed'? false : true, payload));
 
     return () => {
       dispatch(wsConnectionClosedAction());

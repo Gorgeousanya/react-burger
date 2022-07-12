@@ -11,6 +11,7 @@ export const CLOSE_WS_MODAL: "CLOSE_WS_MODAL" = "CLOSE_WS_MODAL";
 export interface IWsConnectionStartAction {
     readonly type: typeof WS_CONNECTION_START;
     readonly withToken: boolean
+    readonly payload: string
 }
 
 export interface IWsConnectionSuccessAction {
@@ -38,9 +39,10 @@ export interface ICloseWsModal {
     readonly type: typeof CLOSE_WS_MODAL;
 }
 
-export const wsConnectionStartAction = (withToken: boolean): IWsConnectionStartAction => ({
+export const wsConnectionStartAction = (withToken: boolean, payload: string): IWsConnectionStartAction => ({
     type: WS_CONNECTION_START,
-    withToken
+    withToken,
+    payload
 });
 
 export const wsConnectionSuccessAction = (): IWsConnectionSuccessAction => ({

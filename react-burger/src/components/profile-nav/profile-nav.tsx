@@ -20,12 +20,10 @@ export const ProfileNav: React.FC = () => {
   };
 
   const onProfile = () => {
-    console.log("profile")
     history.replace({ pathname: '/profile' });
   };
 
   const onProfileOrder = () => {
-    console.log("profile/order")
     history.replace({ pathname: '/profile/orders' });
   };
 

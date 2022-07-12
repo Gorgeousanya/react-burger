@@ -13,7 +13,7 @@ export const FeedPage: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(wsConnectionStartAction(false));
+    dispatch(wsConnectionStartAction(false, '/all'));
 
     return () => {
       dispatch(wsConnectionClosedAction());

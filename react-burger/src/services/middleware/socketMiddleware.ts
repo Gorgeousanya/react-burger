@@ -9,13 +9,13 @@ export const socketMiddleware = (wsUrl: string, wsActions: typeof wsActionTypes)
 
     return next => (action) => {
       const { dispatch } = store;
-      const { type, withToken } = action;
+      const { type, withToken, payload } = action;
       const { wsInit, onOpen, onClose, onError, onGetOrders } = wsActions;
       const accessCookie = getCookie('token')?.split(' ')[1];
       const token = withToken ? accessCookie : '';
 
       if (type === wsInit) {
-        socket = new WebSocket(withToken ? `${wsUrl}?token=${token}` : `${wsUrl}/all`);
+        socket = new WebSocket(withToken ? `${wsUrl}?token=${token}` : `${wsUrl}${payload}`);
       }
 
       if (socket) {

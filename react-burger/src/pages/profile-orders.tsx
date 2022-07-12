@@ -15,7 +15,7 @@ export default function ProfileOrders() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(wsConnectionStartAction(true));
+    dispatch(wsConnectionStartAction(true, ''));
 
     return () => {
       dispatch(wsConnectionClosedAction());
