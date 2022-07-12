@@ -33,7 +33,7 @@ import {
         };
         registerRequest: boolean;
         registerError: boolean;
-        loggedIn: boolean;
+        loggedIn: any;
         loginRequest: boolean;
         loginError: boolean;
         updateTokenRequest: boolean;

@@ -1,14 +1,21 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from '../services/hooks';
 import styles from './pages.module.css';
+import {
+  wsConnectionClosedAction,
+  wsConnectionStartAction,
+} from '../services/actions/feed';
 import { formatRelative } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { useDispatch, useSelector } from '../services/hooks';
-import { TIngredient, TOrder, TOrderInfo } from '../utils/types';
-import { useParams } from 'react-router-dom';
+import { TIngredient } from '../utils/types';
+import { useParams, useLocation } from 'react-router-dom';
 import { formatStatus } from '../services/utils'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const OrderPage: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
+  const location = useLocation();
+  console.log(location.pathname.split('/')[1])
   const orders = useSelector((state) => state.feed.orders);
   const order = orders?.orders?.find((item) => item._id === id);
   const ingredients = useSelector((store) => store.burger.ingredients);
@@ -19,6 +26,16 @@ const OrderPage: React.FC = () => {
     total += sumIngredients;
     return total;
   }, 0);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(wsConnectionStartAction(location.pathname.split('/')[1]=='feed'? false : true));
+
+    return () => {
+      dispatch(wsConnectionClosedAction());
+    };
+  }, [dispatch]);
 
   if (!order)
   return (
