@@ -3,7 +3,8 @@ import styles from './order.module.css';
 import { useSelector } from '../../services/hooks';
 
 export default function OrderDetails() {
-  const order = useSelector((state) => state.burger.order.order);
+  const order = useSelector((state) => state.burger?.order);
+  console.log(order)
   if (!order?.success)
     return (
       <p className="text text_type_main-large mb-15"> Ваш заказ загружается...</p>
@@ -11,7 +12,7 @@ export default function OrderDetails() {
   return (
     <div className={styles.component} >
       <p className="text text_type_main-large">{order?.name}</p>
-      <p className="text text_type_digits-large">{order?.number}</p>
+      <p className="text text_type_digits-large">{order?.order?.number}</p>
       <p className="text text_type_main-medium">
         идентификатор заказа
       </p>

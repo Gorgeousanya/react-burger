@@ -57,7 +57,7 @@ import {
         },
         registerRequest: false,
         registerError: false,
-        loggedIn: false,
+        loggedIn: undefined,
         loginRequest: false,
         loginError: false,
         updateTokenRequest: false,
@@ -185,6 +185,7 @@ import {
                         ...state,
                         userError: true,
                         userRequest: false,
+                        loggedIn: false
                     };
                 }
                 case UPDATE_USER_REQUEST: {

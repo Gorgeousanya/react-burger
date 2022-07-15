@@ -26,8 +26,10 @@ const App: FC = () => {
   useEffect(
     () => {
       dispatch(getIngredientsData());
-      if (localStorage.refreshToken)
+      if (localStorage.refreshToken){
+        console.log(localStorage.refreshToken)
         dispatch(getUser());
+      }
       // @ts-ignore
       history.replace()
     },

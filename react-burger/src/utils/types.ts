@@ -19,8 +19,8 @@ export interface IOrderState {
     orderSuccess: boolean;
     orderRequest: boolean;
     orderFailed: boolean;
-
-    orderName: string;
+    success: boolean;
+    name: string;
     order: {
         number?: number;
         name?: string;
