@@ -1,17 +1,19 @@
-import { Route, Redirect, RouteProps } from "react-router-dom";
+import { Route, Redirect, RouteProps, useLocation } from "react-router-dom";
 import {  useSelector } from '../services/hooks';
 import { FC } from 'react';
 
 const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
     const loggedIn = useSelector((store) => store.auth?.loggedIn);
-    console.log(loggedIn)
+    const location = useLocation();
+
     return (
+        loggedIn!=undefined ?
         <Route
             {...rest}
-            render={({ location }) => (
-                loggedIn==false ?  (<Redirect to={{ pathname: '/login', state: { from: location } }} />) : (children) 
+            render={({  }) => (
+                loggedIn ? (children) : (<Redirect to={{ pathname: '/login', state: { from: location } }} />) 
             )}
-        />
+        /> : null
     );
 }
 
