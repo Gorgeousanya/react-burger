@@ -1,4 +1,19 @@
-export function setCookie(name: string, value: string, props: any) {
+import { Action, ActionCreator, Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { store } from '../services/store';
+import { TAuthActions } from '../services/actions/auth';
+import { TBurgerActions } from '../services/actions/burger'
+import { TFeedActions } from '../services/actions/feed';
+
+type TApplicationActions = TAuthActions | TBurgerActions | TFeedActions;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = Dispatch<TApplicationActions>;
+export type AppThunk<ReturnType = void> = ActionCreator<
+  ThunkAction<ReturnType, Action, RootState, TApplicationActions>
+>;
+
+export function setCookie(name: string, value: string, props?: any) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
@@ -39,3 +54,13 @@ export function checkResponse(res: Response) {
       return Promise.reject(`Ошибка ${res.status}`);
   }
 }
+
+export const formatStatus = (status: string): string => {
+  if (status === "done") {
+    return "Выполнен";
+  } else if (status === "pending") {
+    return "Готовится";
+  } else {
+    return "Создан";
+  }
+};

@@ -1,57 +1,86 @@
 import {
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
-    REGISTER_FAILED,
+    REGISTER_ERROR,
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
-    LOGIN_FAILED,
+    LOGIN_ERROR,
     UPDATE_TOKEN_REQUEST,
     UPDATE_TOKEN_SUCCESS,
-    UPDATE_TOKEN_FAILED,
+    UPDATE_TOKEN_ERROR,
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
-    LOGOUT_FAILED,
+    LOGOUT_ERROR,
     USER_REQUEST,
     USER_SUCCESS,
-    USER_FAILED,
+    USER_ERROR,
     UPDATE_USER_REQUEST,
     UPDATE_USER_SUCCESS,
-    UPDATE_USER_FAILED,
+    UPDATE_USER_ERROR,
     FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_SUCCESS,
-    FORGOT_PASSWORD_FAILED,
+    FORGOT_PASSWORD_ERROR,
     RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_SUCCESS,
-    RESET_PASSWORD_FAILED } from '../actions/auth';
+    RESET_PASSWORD_ERROR,
+    TAuthActions
+ } from '../actions/auth';
 
-    const authInitialState = { 
-        user: null,
-        registerRequest: false,
-        registerFailed: false,
-        loggedIn: false,
-        loginRequest: false,
-        loginFailed: false,
-        updateTokenRequest: false,
-        updateTokenFailed: false,
-        logoutRequest: false,
-        logoutFailed: false,
-        userRequest: false,
-        userFailed: false,
-        updateUserRequest: false,
-        updateUserFailed: false,
-        forgotPasswordRequest: false,
-        forgotPasswordFailed: false,
-        resetPasswordRequest: false,
-        resetPasswordFailed: false,
+    export type TAuthState = {
+        user: {
+            name: string,
+            email: string
+        };
+        registerRequest: boolean;
+        registerError: boolean;
+        loggedIn: any;
+        loginRequest: boolean;
+        loginError: boolean;
+        updateTokenRequest: boolean;
+        updateTokenError: boolean;
+        logoutRequest: boolean;
+        logoutError: boolean;
+        userRequest: boolean;
+        userError: boolean;
+        updateUserRequest: boolean;
+        updateUserError: boolean;
+        forgotPasswordRequest: boolean;
+        forgotPasswordError: boolean;
+        resetPasswordRequest: boolean;
+        resetPasswordError: boolean;
     };
 
-    export const authReducer = (state = authInitialState, action) => {
+    const authInitialState = { 
+        user: {
+            name: '',
+            email: ''
+        },
+        registerRequest: false,
+        registerError: false,
+        loggedIn: undefined,
+        loginRequest: false,
+        loginError: false,
+        updateTokenRequest: false,
+        updateTokenError: false,
+        logoutRequest: false,
+        logoutError: false,
+        userRequest: false,
+        userError: false,
+        updateUserRequest: false,
+        updateUserError: false,
+        forgotPasswordRequest: false,
+        forgotPasswordError: false,
+        resetPasswordRequest: false,
+        resetPasswordError: false,
+    };
+
+    export const authReducer = (state = authInitialState, action: TAuthActions):TAuthState => {
         switch (action.type) {
             case REGISTER_REQUEST: {
                 return {
                     ...state,
                     registerRequest: true,
-                    registerFailed: false,
+                    registerError: false,
                 };
             }
                 case REGISTER_SUCCESS: {
@@ -62,10 +91,10 @@ import {
                         loggedIn: true
                     };
                 }
-                case REGISTER_FAILED: {
+                case REGISTER_ERROR: {
                     return {
                         ...state,
-                        registerFailed: true,
+                        registerError: true,
                         registerRequest: false,
                     };
                 }
@@ -73,7 +102,7 @@ import {
                     return {
                         ...state,
                         loginRequest: true,
-                        loginFailed: false,
+                        loginError: false,
                     };
                 }
                 case LOGIN_SUCCESS: {
@@ -84,10 +113,10 @@ import {
                         loggedIn: true
                     };
                 }
-                case LOGIN_FAILED: {
+                case LOGIN_ERROR: {
                     return {
                         ...state,
-                        loginFailed: true,
+                        loginError: true,
                         loginRequest: false,
                     };
                 }
@@ -95,7 +124,7 @@ import {
                     return {
                         ...state,
                         updateTokenRequest: true,
-                        updateTokenFailed: false,
+                        updateTokenError: false,
                     };
                 }
                 case UPDATE_TOKEN_SUCCESS: {
@@ -105,10 +134,10 @@ import {
                         updateTokenRequest: false,
                     };
                 }
-                case UPDATE_TOKEN_FAILED: {
+                case UPDATE_TOKEN_ERROR: {
                     return {
                         ...state,
-                        updateTokenFailed: true,
+                        updateTokenError: true,
                         updateTokenRequest: false,
                     };
                 }
@@ -116,20 +145,23 @@ import {
                     return {
                         ...state,
                         logoutRequest: true,
-                        logoutFailed: false,
+                        logoutError: false,
                     };
                 }
                 case LOGOUT_SUCCESS: {
                     return {
                         ...state,
                         loggedIn: false,
-                        user: null,
+                        user: {
+                            name: '',
+                            email: ''
+                        },
                     };
                 }
-                case LOGOUT_FAILED: {
+                case LOGOUT_ERROR: {
                     return {
                         ...state,
-                        logoutFailed: true,
+                        logoutError: true,
                         logoutRequest: false,
                     };
                 }
@@ -137,7 +169,7 @@ import {
                     return {
                         ...state,
                         userRequest: true,
-                        userFailed: false,
+                        userError: false,
                     };
                 }
                 case USER_SUCCESS: {
@@ -148,18 +180,19 @@ import {
                         userRequest: false,
                     };
                 }
-                case USER_FAILED: {
+                case USER_ERROR: {
                     return {
                         ...state,
-                        userFailed: true,
+                        userError: true,
                         userRequest: false,
+                        loggedIn: false
                     };
                 }
                 case UPDATE_USER_REQUEST: {
                     return {
                         ...state,
                         updateUserRequest: true,
-                        updateUserFailed: false,
+                        updateUserError: false,
                     };
                 }
                 case UPDATE_USER_SUCCESS: {
@@ -169,10 +202,10 @@ import {
                         updateUserRequest: false,
                     };
                 }
-                case UPDATE_USER_FAILED: {
+                case UPDATE_USER_ERROR: {
                     return {
                         ...state,
-                        updateUserFailed: true,
+                        updateUserError: true,
                         updateUserRequest: false,
                     };
                 }
@@ -180,20 +213,20 @@ import {
                     return {
                         ...state,
                         forgotPasswordRequest: true,
-                        forgotPasswordFailed: false,
+                        forgotPasswordError: false,
                     };
                 }
                 case FORGOT_PASSWORD_SUCCESS: {
                     return {
                         ...state,
-                        user: action.user,
+                        forgotPasswordError: false,
                         forgotPasswordRequest: false,
                     };
                 }
-                case FORGOT_PASSWORD_FAILED: {
+                case FORGOT_PASSWORD_ERROR: {
                     return {
                         ...state,
-                        forgotPasswordFailed: true,
+                        forgotPasswordError: true,
                         forgotPasswordRequest: false,
                     };
                 }
@@ -201,20 +234,20 @@ import {
                     return {
                         ...state,
                         resetPasswordRequest: true,
-                        resetPasswordFailed: false,
+                        resetPasswordError: false,
                     };
                 }
                 case RESET_PASSWORD_SUCCESS: {
                     return {
                         ...state,
-                        user: action.user,
+                        resetPasswordError: false,
                         resetPasswordRequest: false,
                     };
                 }
-                case RESET_PASSWORD_FAILED: {
+                case RESET_PASSWORD_ERROR: {
                     return {
                         ...state,
-                        resetPasswordFailed: true,
+                        resetPasswordError: true,
                         resetPasswordRequest: false,
                     };
                 }                                

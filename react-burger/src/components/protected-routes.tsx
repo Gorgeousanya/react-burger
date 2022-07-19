@@ -1,19 +1,19 @@
-import { Route, Redirect, RouteProps } from "react-router-dom";
-import { useSelector, RootStateOrAny } from 'react-redux';
+import { Route, Redirect, RouteProps, useLocation } from "react-router-dom";
+import {  useSelector } from '../services/hooks';
 import { FC } from 'react';
 
 const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
-    const loggedIn = useSelector((store: RootStateOrAny) => store.auth.loggedIn);
+    const loggedIn = useSelector((store) => store.auth?.loggedIn);
+    const location = useLocation();
 
     return (
+        loggedIn!=undefined ?
         <Route
             {...rest}
-            render={({ location }) => (
-                loggedIn
-                ? (children)
-                : (<Redirect to={{ pathname: '/login', state: { from: location } }} />)
+            render={({  }) => (
+                loggedIn ? (children) : (<Redirect to={{ pathname: '/login', state: { from: location } }} />) 
             )}
-        />
+        /> : null
     );
 }
 
