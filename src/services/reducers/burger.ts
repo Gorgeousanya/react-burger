@@ -15,7 +15,7 @@ type TBurgerState = {
     orderError: boolean,
   };
 
-const burgerInitialState: TBurgerState = { 
+export const burgerInitialState: TBurgerState = { 
     tab: "one",
     ingredients: [],
     ingredientsLoading: false,
@@ -46,6 +46,7 @@ export const burgerReducer = (state = burgerInitialState, action: TBurgerActions
         case GET_INGREDIENTS_ERROR:
             return {
                 ...state,
+                ingredientsError: true,
                 ingredientsLoading: false,
             } 
         case GET_ORDER_REQUEST:
@@ -66,6 +67,7 @@ export const burgerReducer = (state = burgerInitialState, action: TBurgerActions
             return {
                 ...state,
                 orderLoading: false,
+                orderError: true
             }           
         case ADD_INGREDIENT:
             return {
