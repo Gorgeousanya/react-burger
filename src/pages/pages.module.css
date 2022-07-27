@@ -25,7 +25,7 @@
   width: 34vw;
 }
 
-.inputs{
+.inputs {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,7 +43,7 @@
   background-color: #1C1C21;
 }
 
-.input{
+.input {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +52,7 @@
 
 }
 
-.save{
+.save {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -61,24 +61,78 @@
   width: 100%;
 }
 
-.text{
+.text {
   margin-left: 40px;
 }
 
-.ingredient{
+.ingredient {
   display: flex;
   justify-content: space-around;
   padding-bottom: 60px;
   padding-top: 32px;
 }
 
-.component{
+.ingredients {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.component {
   overflow: hidden;
   text-align: center;
   position: relative;
   top: 5%;
   margin: 0 auto;
   width: 680px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 90vh;
+  width: 584px;
+}
+
+.status {
+  composes: text text_type_main-default pb-6 from global;
+  color: #00CCCC;
+}
+
+.orders {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 90vh;
+  width: 790px;
+}
+
+.modal{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
+  margin: 0 auto;
+  width: 640px;
+  padding-left: 30px;
+  padding-bottom: 30px;
+}
+
+.content{
+  justify-content: flex-start;
+  text-align: left;
 }
 
 @media (max-width: 1200px) {
@@ -90,4 +144,11 @@
 .input_size_default {
   width: 400px;
   min-height: 64px;
+}
+
+.total{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: auto;
 }

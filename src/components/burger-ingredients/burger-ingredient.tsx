@@ -2,7 +2,7 @@ import React from 'react';
 import ingredientStyles from './burger-ingredients.module.css';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TIngredient } from '../../utils/types';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { openModal, setTab } from '../../services/actions/burger';
 import { useDrag } from "react-dnd";
 import { useLocation, Link } from 'react-router-dom';
@@ -13,44 +13,44 @@ const main = "Начинки";
 
 type TCard = {
   item: TIngredient,
-  onClick: ()=>void,
+  onClick: () => void,
 }
 
-const Card: React.FC<TCard> = ({item, onClick}) => {
+const Card: React.FC<TCard> = ({ item, onClick }) => {
   const [, dragRef] = useDrag({
     type: "ingredients",
     item: item
   });
-  
+
   const location = useLocation();
-  const constructor = useSelector((state: RootStateOrAny) => state.burger.constructor);
-  const count = constructor?.filter((ingredient: any) => ingredient._id === item._id).length;
-  
+  const constructor = useSelector((store) => store.burger.constructor);
+  const count = constructor?.filter((ingredient) => ingredient._id === item._id).length;
+
   return (
     <React.Fragment>
-       <Link
+      <Link
         className={ingredientStyles.link}
         key={item._id}
         to={{
           pathname: `/ingredients/${item._id}`,
           state: { background: location },
         }}>
-      <div className={ingredientStyles.card} onClick={onClick} ref={dragRef}>
-        {
-          count !== 0 && count &&
-          <div className={ingredientStyles.counter}>
-            <Counter count={count} size="default" />
+        <div className={ingredientStyles.card} onClick={onClick} ref={dragRef}>
+          {
+            count !== 0 && count &&
+            <div className={ingredientStyles.counter}>
+              <Counter count={count} size="default" />
+            </div>
+          }
+          <img src={item.image_large} className={ingredientStyles.img} alt={item.name} />
+          <div className={ingredientStyles.map}>
+            <p className="text text_type_digits-default"  >
+              {item.price}
+              <CurrencyIcon type="primary" />
+            </p>
           </div>
-        }
-        <img src={item.image_large} className={ingredientStyles.img} alt={item.name}/>
-        <div className={ingredientStyles.map}>
-          <p className="text text_type_digits-default"  >
-            {item.price}
-            <CurrencyIcon type="primary" />
-          </p>
+          <p className="text text_type_main-default" >{item.name}</p>
         </div>
-        <p className="text text_type_main-default" >{item.name}</p>
-      </div>
       </Link>
     </React.Fragment>
   )
@@ -58,8 +58,8 @@ const Card: React.FC<TCard> = ({item, onClick}) => {
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
-  const current = useSelector((state: RootStateOrAny) => state.burger.tab);
-  const items = useSelector((state: RootStateOrAny) => state.burger.ingredients);
+  const current = useSelector((store) => store.burger.tab);
+  const items = useSelector((store) => store.burger.ingredients);
 
   function clickTab(e: string) {
     console.log(e)
@@ -92,11 +92,9 @@ const BurgerIngredients = () => {
 
   return (
     <div className={ingredientStyles.ingredient}>
-      <div className={ingredientStyles.burger}>
-        <p className="text text_type_main-large">
-          Соберите бургер
-        </p>
-      </div >
+      <p className="text text_type_main-large mt-10 mb-5">
+        Соберите бургер
+      </p>
       <div className={ingredientStyles.tab}>
         <Tab value="one" active={current === 'one'} onClick={clickTab}>
           {bun}
@@ -114,7 +112,7 @@ const BurgerIngredients = () => {
             {bun}
           </p>
           <div className={ingredientStyles.map} >
-            {items?.map((item: any) =>
+            {items?.map((item) =>
               item.type === "bun" &&
               <Card key={item._id} item={item} onClick={() => { clickItem(item) }} />)
             }
@@ -123,7 +121,7 @@ const BurgerIngredients = () => {
             {sauce}
           </p>
           <div className={ingredientStyles.map}>
-            {items?.map((item: any) =>
+            {items?.map((item) =>
               item.type === "sauce" &&
               <Card key={item._id} item={item} onClick={() => { clickItem(item) }} />)
             }
@@ -132,7 +130,7 @@ const BurgerIngredients = () => {
             {main}
           </p>
           <div className={ingredientStyles.map}>
-            {items?.map((item: any) =>
+            {items?.map((item) =>
               item.type === "main" &&
               <Card key={item._id} item={item} onClick={() => { clickItem(item) }} />)
             }

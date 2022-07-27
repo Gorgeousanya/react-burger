@@ -1,0 +1,71 @@
+.item {
+    width: 95%;
+    box-sizing: border-box;
+    background-color: #1C1C21;
+    border-radius: 40px;
+    padding: 30px;
+    margin: 15px;
+}
+
+.itemWidth {
+    width: 844px;
+}
+
+.data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.count {
+    composes: text text_type_digits-default from global;
+    font-size: 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #1C1C21;
+    opacity: 0.6;
+}
+
+.price {
+    display: flex;
+    gap: 9px;
+}
+
+.images {
+    margin-right: -20px;
+    position: relative;
+}
+
+.image {
+    object-fit: cover;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: #131316;
+    outline: 2px solid rgb(136, 118, 236);
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.status {
+    composes: text text_type_main-default pb-6 from global;
+    color: #00CCCC;
+}

@@ -3,7 +3,7 @@ import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import React, { useState, useRef, SyntheticEvent } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { login } from '../services/actions/auth';
-import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 
 interface LocationState {
   from: {
@@ -17,7 +17,7 @@ export default function LoginPage() {
   const inputRef = useRef(null)
   const [form, setValue] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
-  const loggedIn = useSelector((state: RootStateOrAny) => state.auth.loggedIn);
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
 
   const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
