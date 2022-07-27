@@ -24,7 +24,7 @@
     "react-scripts": "4.0.3",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
-    "typescript": "^4.5.2",
+    "typescript": "^4.5.5",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.2"
   },
@@ -33,7 +33,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "cypress:open": "./node_modules/.bin/cypress open",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": [
