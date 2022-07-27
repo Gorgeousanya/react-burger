@@ -15,7 +15,7 @@ type TFeedState = {
   wsModal: boolean;
 };
 
-const feedInitialState: TFeedState = {
+export const feedInitialState: TFeedState = {
   wsConnected: false,
   orders: {} as TOrders,
   wsModal: true,

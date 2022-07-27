@@ -50,7 +50,7 @@ import {
         resetPasswordError: boolean;
     };
 
-    const authInitialState = { 
+    export const authInitialState = { 
         user: {
             name: '',
             email: ''
