@@ -1,9 +1,9 @@
 import { Action, ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { store } from '../services/store';
-import { TAuthActions } from '../services/actions/auth';
-import { TBurgerActions } from '../services/actions/burger'
-import { TFeedActions } from '../services/actions/feed';
+import { store } from './store';
+import { TAuthActions } from './actions/auth';
+import { TBurgerActions } from './actions/burger'
+import { TFeedActions } from './actions/feed';
 
 type TApplicationActions = TAuthActions | TBurgerActions | TFeedActions;
 
