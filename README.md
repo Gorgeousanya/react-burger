@@ -13,3 +13,5 @@
 2. выполнить установку пакетов: `npm i`
 3. запустить проект: `npm start`
 
+## Ссылка на проект 
+- https://gorgeousanya.github.io/react-burger/
