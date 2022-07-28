@@ -177,7 +177,7 @@ import {
                         ...state,
                         user: action.user,
                         loggedIn: true,
-                        userRequest: false,
+                        userError: false,
                     };
                 }
                 case USER_ERROR: {

@@ -23,7 +23,7 @@ const AppHeader = () => {
         <div className={headerStyles.logo}>
           <Logo />
         </div>
-        <NavLink exact to="/profile" className={headerStyles.button} activeClassName={headerStyles.button_active}>
+        <NavLink to="/profile" className={headerStyles.button} activeClassName={headerStyles.button_active}>
           <div className={headerStyles.content}><ProfileIcon type={profile||orders ? "primary" : "secondary"} />
             <p className={headerStyles.button_text}>Личный кабинет</p></div>
         </NavLink>
