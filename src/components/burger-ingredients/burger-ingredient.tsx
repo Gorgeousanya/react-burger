@@ -35,6 +35,7 @@ const Card: React.FC<TCard> = ({ item, onClick }) => {
           pathname: `/ingredients/${item._id}`,
           state: { background: location },
         }}>
+        
         <div className={ingredientStyles.card} onClick={onClick} ref={dragRef}>
           {
             count !== 0 && count &&

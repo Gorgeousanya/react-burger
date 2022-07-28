@@ -29,7 +29,7 @@ export const Modal: FC<TModal> = ({ onClose, isOpen, children }) => {
             <div className={styles.modal} >
                 <div className={styles.header}>
                     <div className={styles.button}>
-                        <Button type="secondary" size="small" onClick={onClose} >
+                        <Button name="close" type="secondary" size="small" onClick={onClose} >
                             <CloseIcon type="primary" />
                         </Button>
                     </div>

@@ -326,6 +326,7 @@ export const getUser: AppThunk = () => {
                 // }
             });
     }
+    
 }
 
 export const updateUser: AppThunk = (email: string, name: string) => {

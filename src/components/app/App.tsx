@@ -19,6 +19,7 @@ const App: FC = () => {
   const dispatch = useDispatch();
   let modalItem = useSelector((state) => state.burger.modal);
   let modalWs = useSelector((state)=> state.feed.wsModal)
+  const loggedIn = useSelector((store) => store.auth?.loggedIn);
   const history = useHistory();
   const location = useLocation<TLocation>();
   let background = location.state && location.state.background;
@@ -32,6 +33,7 @@ const App: FC = () => {
       }
       // @ts-ignore
       history.replace()
+      console.log(loggedIn)
     },
     [dispatch]
   );
@@ -49,6 +51,9 @@ const App: FC = () => {
         // @ts-ignore
         location={background || location}>
         <Route path="/" exact={true}>
+          <HomePage />
+        </Route>
+        <Route path="/react-burger" exact={true}>
           <HomePage />
         </Route>
         <ProtectedRoute path="/profile/orders/:id">
