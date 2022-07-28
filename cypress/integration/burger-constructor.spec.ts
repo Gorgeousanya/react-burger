@@ -7,26 +7,26 @@ context('Cypress-тесты для страницы «Конструктор»',
 
     it('Перетаскивание ингредиентa в конструктор', () => {
         const dataTransfer = new DataTransfer()
-        cy.contains('[class=burger-ingredients_link__2-zFo]', 'Краторная булка N-200i', {force: true}).trigger('dragstart', {
+        cy.contains('[class^="burger-ingredients_link"]', 'Краторная булка N-200i', {force: true}).trigger('dragstart', {
                 dataTransfer
             });
         cy.wait(2000);
-        cy.get('.burger-constructor_main__O9C0W').trigger('drop', {
+        cy.get('[class^="burger-constructor_main"]').trigger('drop', {
             dataTransfer
         });
-        cy.contains('[class="burger-ingredients_link__2-zFo"]', 'Соус Spicy-X', {force: true})
+        cy.contains('[class^="burger-ingredients_link"]', 'Соус Spicy-X', {force: true})
             .trigger('dragstart', {
                 dataTransfer
             })
         cy.wait(2000);
-        cy.get('.burger-constructor_main__O9C0W', {force: true}).trigger('drop', {
+        cy.get('[class^="burger-constructor_main"]', {force: true}).trigger('drop', {
             dataTransfer
         });
     })
 
     it('открытие модального окна с описанием ингредиента', () => {
         cy.wait(2000);
-        cy.contains('[class=burger-ingredients_link__2-zFo]', 'Краторная булка N-200i', {force: true}).click();
+        cy.contains('[class^="burger-ingredients_link"]', 'Краторная булка N-200i', {force: true}).click();
     })
 
     it('отображение в модальном окне данных ингредиента', () => {
@@ -48,7 +48,7 @@ context('Cypress-тесты для страницы «Конструктор»',
         cy.location('pathname').should('eq', '/');
         cy.contains('Оформить заказ', {force: true}).click();
         cy.wait(20000);
-        cy.get('.order_component__3RloR').should("exist");
+        cy.get('[class^="order_component"]').should("exist");
     })
 
     it('закрытие модальных окон при клике на кнопку закрытия', () => {
